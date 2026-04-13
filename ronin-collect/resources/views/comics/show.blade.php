@@ -45,9 +45,12 @@
                     Vol. {{ $volume->volume_number }}
                 </div>
             </div>
-            <p class="text-center font-label text-[10px] tracking-widest text-on-surface-variant uppercase mt-2">
-                {{ $volume->acquisition_date ? $volume->acquisition_date->format('M Y') : 'Unknown' }}
-            </p>
+            <div class="flex justify-between items-center mt-2 px-1">
+                <p class="font-label text-[10px] tracking-widest text-on-surface-variant uppercase">
+                    {{ $volume->acquisition_date ? $volume->acquisition_date->format('M Y') : 'Unknown' }}
+                </p>
+                <a href="{{ route('volumes.edit', $volume) }}" class="text-primary hover:underline font-label text-[10px] tracking-widest">EDIT</a>
+            </div>
         </div>
         @empty
         <div class="col-span-full py-12 text-center font-label tracking-widest text-on-surface/50 uppercase">

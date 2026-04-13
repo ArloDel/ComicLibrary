@@ -26,10 +26,16 @@
             </select>
         </div>
 
-        <!-- Volume Number -->
+        <!-- Volume Start -->
         <div>
-        <label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Volume Number</label>
-        <input name="volume_number" value="{{ old('volume_number') }}" required class="w-full bg-surface-container-low border-0 focus:ring-2 focus:ring-primary px-4 py-3 font-body text-on-surface placeholder:text-outline/40" placeholder="e.g. 1" type="text"/>
+        <label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Volume Number (Start)</label>
+        <input name="volume_start" value="{{ old('volume_start') }}" required class="w-full bg-surface-container-low border-0 focus:ring-2 focus:ring-primary px-4 py-3 font-body text-on-surface placeholder:text-outline/40" placeholder="e.g. 1" type="number" min="1"/>
+        </div>
+
+        <!-- Volume End -->
+        <div>
+        <label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Volume Number (End) - Optional for Bulk</label>
+        <input name="volume_end" value="{{ old('volume_end') }}" class="w-full bg-surface-container-low border-0 focus:ring-2 focus:ring-primary px-4 py-3 font-body text-on-surface placeholder:text-outline/40" placeholder="e.g. 25" type="number" min="1"/>
         </div>
 
         <!-- Acquisition Date -->
