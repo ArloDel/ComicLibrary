@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&amp;family=Manrope:wght@400;500;600&amp;family=Space_Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#fffbff",
+                    "on-secondary-container": "#445a7f",
+                    "inverse-primary": "#ffb3b1",
+                    "surface-container-high": "#e2ebdf",
+                    "secondary": "#485f84",
+                    "surface-container-low": "#edf6ea",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed-dim": "#b0c7f1",
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "background": "#f3fcf0",
+                    "on-primary-fixed-variant": "#92001c",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#161d16",
+                    "on-tertiary-container": "#fcfcfc",
+                    "secondary-fixed": "#d5e3ff",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "primary-container": "#db313f",
+                    "primary-fixed": "#ffdad8",
+                    "outline": "#8f6f6e",
+                    "surface-bright": "#f3fcf0",
+                    "surface-variant": "#dce5d9",
+                    "surface-container": "#e7f0e5",
+                    "inverse-surface": "#2a322b",
+                    "secondary-container": "#bbd3fd",
+                    "on-tertiary-fixed": "#1b1b1b",
+                    "on-primary": "#ffffff",
+                    "tertiary": "#5c5c5c",
+                    "outline-variant": "#e4bebc",
+                    "error": "#ba1a1a",
+                    "on-surface": "#161d16",
+                    "tertiary-fixed": "#e2e2e2",
+                    "primary": "#b7102a",
+                    "inverse-on-surface": "#eaf3e7",
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#747474",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#410007",
+                    "surface-dim": "#d4ddd1",
+                    "on-surface-variant": "#5b403f",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#ffb3b1",
+                    "surface": "#f3fcf0",
+                    "surface-tint": "#bb152c",
+                    "surface-container-highest": "#dce5d9",
+                    "on-secondary-fixed": "#001b3c",
+                    "on-secondary-fixed-variant": "#30476a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Manrope"],
+                    "label": ["Space Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .vertical-text {
+            writing-mode: vertical-rl;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f3fcf0]/80 dark:bg-[#161d16]/80 backdrop-blur-md flex justify-between items-center px-8 py-4 w-full">
+<div class="flex items-center gap-12">
+<span class="text-2xl font-black text-[#161d16] dark:text-[#f3fcf0] tracking-tighter font-headline uppercase">RONIN_COLLECT</span>
+<div class="hidden md:flex gap-8">
+<a class="font-headline tracking-tighter uppercase text-[#b7102a] border-b-4 border-[#b7102a] pb-1 transition-colors duration-200" href="#">Library</a>
+<a class="font-headline tracking-tighter uppercase text-[#161d16] dark:text-[#f3fcf0] opacity-70 hover:text-[#b7102a] transition-colors duration-200" href="#">Archive</a>
+<a class="font-headline tracking-tighter uppercase text-[#161d16] dark:text-[#f3fcf0] opacity-70 hover:text-[#b7102a] transition-colors duration-200" href="#">Market</a>
+<a class="font-headline tracking-tighter uppercase text-[#161d16] dark:text-[#f3fcf0] opacity-70 hover:text-[#b7102a] transition-colors duration-200" href="#">Curations</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined scale-105 transition-transform cursor-pointer" data-icon="notifications">notifications</span>
+<div class="w-10 h-10 bg-surface-container-high rounded-full overflow-hidden border-2 border-primary">
+<img alt="User profile" data-alt="Portrait of a modern minimalist digital artist, clean lighting, soft background focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACTw-Uz3DtIs74AyYO0ETLzCo1kuByT5KopWVq44qS-JHkb9RyC7vGRHqy7ZE4FasfF6mtHK_6m9XThShkBTijYETXaIwuAyts-_JQ2ItNSte4SaZVhBsu6iuDTg7QRnPZHTP2E0TpU6YtWx6pdXj2Mn-vz_NLFiqY1t_YzGWeQPvWrp8cQfpSyRX-TuFyn60touAanKunMKOizEX-X1DCYe5_PjeYneGrIA0LlmlHbnxZLewYGCh_VyYF2nUp_f6tasQz8GbwdS8"/>
+</div>
+</div>
+</nav>
+<main class="pt-24 pb-20 px-8 max-w-7xl mx-auto">
+<!-- Hero Section: Editorial Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
+<!-- Left: Large Cover Art (6 columns) -->
+<div class="md:col-span-6 relative group">
+<div class="aspect-[2/3] bg-surface-container-low overflow-hidden">
+<img alt="Manga Cover Art" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-100 hover:scale-105" data-alt="Dramatic manga cover art featuring a lone warrior silhouette against a massive red sun, high contrast ink style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXE9cw-IG_XuYf_QVMUkSX1pAqjCRJZTr6dlSYad_bAVwMijkcErNth5mMRko6dkGqYNhaXCuYs84wwZdG1ifAlvravGa-hESi9d27GmzkfR6emZwscQsXj01LUNeFp_i_wgkZsj3rD_mBvUklDSXMw1WojqPRZs6Kr0p4OX7Bk4Petn5d3yjHJcS7JVpYcu8WVZvpYVlsTCNeyP3Ia8d1oRKau8Wtp-uJED6PypLUwwFfk-lx-QpTtxnHqd97DFpPFiviVRiO5Iw"/>
+</div>
+<div class="absolute -left-4 top-12 hidden lg:block">
+<span class="vertical-text font-label text-primary text-xs tracking-[0.5em] font-bold">LIMITED_EDITION_042</span>
+</div>
+</div>
+<!-- Right: Content (6 columns) -->
+<div class="md:col-span-6 flex flex-col justify-center">
+<div class="space-y-6">
+<div>
+<span class="font-label text-primary text-sm font-bold tracking-widest bg-primary-fixed px-3 py-1">SEINEN_ARCHIVE</span>
+<h1 class="font-headline text-6xl font-black text-on-surface mt-4 tracking-tighter uppercase leading-none">
+                            THE LAST <br/><span class="text-primary">RONIN</span> VOL. 01
+                        </h1>
+</div>
+<div class="flex gap-8 border-y-2 border-surface-container-high py-6">
+<div>
+<p class="font-label text-xs opacity-60 tracking-widest uppercase">Author</p>
+<p class="font-headline font-bold text-lg">K. TAKAHASHI</p>
+</div>
+<div>
+<p class="font-label text-xs opacity-60 tracking-widest uppercase">Published</p>
+<p class="font-headline font-bold text-lg">OCT 2024</p>
+</div>
+<div>
+<p class="font-label text-xs opacity-60 tracking-widest uppercase">Status</p>
+<p class="font-headline font-bold text-lg text-primary">COLLECTED</p>
+</div>
+</div>
+<p class="text-lg leading-relaxed text-on-surface-variant font-body">
+                        In a fractured future where history is written in neon and blood, one nameless warrior seeks the remnants of the editorial guild. A masterfully paced narrative that explores the silence between strokes of a blade.
+                    </p>
+<div class="pt-4 flex flex-wrap gap-4">
+<button class="bg-primary text-white font-label font-bold py-4 px-10 tracking-widest hover:bg-primary-container transition-all flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+                            START READING
+                        </button>
+<button class="bg-on-surface text-surface font-label font-bold py-4 px-10 tracking-widest hover:bg-opacity-90 transition-all">
+                            WISHLIST
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Grid for Details & Checklist -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Collection Checklist (2 columns) -->
+<div class="md:col-span-2 bg-surface-container-low p-8">
+<div class="flex justify-between items-end mb-8">
+<h2 class="font-headline text-3xl font-black uppercase tracking-tighter">Chapter_Checklist</h2>
+<span class="font-label text-sm font-bold text-primary">82% COMPLETE</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Chapter Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border-l-4 border-primary">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="font-label text-xs opacity-50">CH_001</p>
+<p class="font-bold">THE INK BLOT</p>
+</div>
+</div>
+<span class="font-label text-[10px] bg-surface-container-high px-2 py-1">OWNED</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border-l-4 border-primary">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="font-label text-xs opacity-50">CH_002</p>
+<p class="font-bold">SILENT ECHOES</p>
+</div>
+</div>
+<span class="font-label text-[10px] bg-surface-container-high px-2 py-1">OWNED</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border-l-4 border-outline">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined opacity-30" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+<div>
+<p class="font-label text-xs opacity-50">CH_003</p>
+<p class="font-bold">RED HORIZON</p>
+</div>
+</div>
+<span class="font-label text-[10px] text-primary underline cursor-pointer">ACQUIRE</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest border-l-4 border-primary">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div>
+<p class="font-label text-xs opacity-50">CH_004</p>
+<p class="font-bold">THE LAST STROKE</p>
+</div>
+</div>
+<span class="font-label text-[10px] bg-surface-container-high px-2 py-1">OWNED</span>
+</div>
+</div>
+</div>
+<!-- Rate This & Meta (1 column) -->
+<div class="bg-on-surface text-surface p-8 flex flex-col justify-between">
+<div>
+<h2 class="font-headline text-3xl font-black uppercase tracking-tighter mb-6">RATE_ENTRY</h2>
+<div class="flex gap-2 mb-8">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined opacity-20 text-4xl" data-icon="star">star</span>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center border-b border-surface/20 pb-2">
+<span class="font-label text-xs tracking-widest opacity-60">POPULARITY</span>
+<span class="font-headline font-bold">#14</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface/20 pb-2">
+<span class="font-label text-xs tracking-widest opacity-60">FAVORITES</span>
+<span class="font-headline font-bold">12.4K</span>
+</div>
+<div class="flex justify-between items-center border-b border-surface/20 pb-2">
+<span class="font-label text-xs tracking-widest opacity-60">LANGUAGE</span>
+<span class="font-headline font-bold">EN / JP</span>
+</div>
+</div>
+</div>
+<button class="w-full py-4 border-2 border-primary text-primary font-label font-bold tracking-widest mt-8 hover:bg-primary hover:text-white transition-all">
+                    SUBMIT REVIEW
+                </button>
+</div>
+</div>
+<!-- Related Titles -->
+<section class="mt-20">
+<div class="flex items-center gap-4 mb-8">
+<h2 class="font-headline text-4xl font-black uppercase tracking-tighter">Related_Titles</h2>
+<div class="h-[2px] flex-grow bg-surface-container-high"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+<!-- Related Card 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container-low mb-4 overflow-hidden border-b-4 border-transparent group-hover:border-primary transition-all">
+<img alt="Related Manga" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Monochrome manga art showing a cyberpunk city skyline with red neon highlights and rain effects" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLGM09ZgWGF2pSwtb2HJu9z_OhKk0xEOtaO7AZwxBX_BXMScUF-W0CpLdI3U8InmR4I6ADG2PvPqrNs9VIhrrgoDk40CV3RqHgp5orPi0BfLUMqa6nvEgUX1DeREG_THBsJ9jsUbld0WdH03Stjd-qlMOPZA_L5Fa5Z0F3fqoR5gEMd6acxrmScnKtUGYHS4V3o1PTl6DVg2wUmPugEsnqyUz5YvaD-nFWNpHYx6X7ZjEELZxhLdkN5NTj8h_EEOHY7FLQmioptLA"/>
+</div>
+<h3 class="font-headline font-bold text-sm uppercase tracking-tight">NEON_PULSE</h3>
+<p class="font-label text-[10px] opacity-60 tracking-widest">CYBERPUNK / SEINEN</p>
+</div>
+<!-- Related Card 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container-low mb-4 overflow-hidden border-b-4 border-transparent group-hover:border-primary transition-all">
+<img alt="Related Manga" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Abstract Japanese ink wash painting style character portrait with bold red brush strokes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2G6FLSTufZQ9teFMuvH-k4Df49UUttm-IMwY0a_Kl2074PaBLjjwn1BnltzhYKwam_vH4JFJXWpVVrrpzyUqI_yvvy11xAb6eJ5WFouP_ZkcpgYw_En3gXqcYxv-2QWWKby5waMuwVAJwCtCbSF3Xkp3JASyA3cSNvIZTheSA29XY8OMpyH9LHRZL9WIb5NaRrWynu_hCa6H5NsV_FJDts91XlK1k3n4ULirk3_CQnLBAKQ63PXWIARH4yMI_9TaSEgMisE6znqA"/>
+</div>
+<h3 class="font-headline font-bold text-sm uppercase tracking-tight">SUMI_E_WARRIOR</h3>
+<p class="font-label text-[10px] opacity-60 tracking-widest">HISTORICAL / ART</p>
+</div>
+<!-- Related Card 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container-low mb-4 overflow-hidden border-b-4 border-transparent group-hover:border-primary transition-all">
+<img alt="Related Manga" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Close up of a classic fountain pen and ink on textured paper with dramatic shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVEs3hWsb0Nbj9fdtyR54EnxzIn-FDqF-PZYo4w6ArUf0IqapuKHVp0zpHIqfKq5Hco9TFwJVWmitZsz26A-AW_qAjnFulOUwrdVUGX9Huxiswc8B69rSbLmn9pLpJ6Gh7r_KrnpnKjtSR_khhoQlCEAiM4P3GVCFbMVZB8h4lDse5HmLAKiMi4_As0apyV6C_IOUL_f1j6HRWhBENoiXNRvehOpfEr4v8MlUe7ouk2wIOKeG0XON-Wa36OHm2M62Zo4O3PFtxh2A"/>
+</div>
+<h3 class="font-headline font-bold text-sm uppercase tracking-tight">SCRIPT_EMPTY</h3>
+<p class="font-label text-[10px] opacity-60 tracking-widest">DRAMA / MYSTERY</p>
+</div>
+<!-- Related Card 4 -->
+<div class="group cursor-pointer hidden md:block">
+<div class="aspect-[3/4] bg-surface-container-low mb-4 overflow-hidden border-b-4 border-transparent group-hover:border-primary transition-all">
+<img alt="Related Manga" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Traditional Japanese temple silhouette against a stark white sky with red blossoms in foreground" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDruS3rhsw5fHuXoQ57-vtX8IRW_oAOzNRxScyQKK-g3u5kJQcaHwqrOyTOS9n7zQcbLTT7El_pLoFdYP10_kO5D-C4uID2QKSDUwJByabZtOxSQw_jKq8G88F52Fz50Q5CKY-xs_QRc_wujdfSSxg-iTpslk-pSmVvd5-5qgAA-rxXBAhUNZOI_jmnvifkCYPV-QEqA-GuNBMuyc6oEOjshUCwTZ0HZFHB_EVAdwl0kYbeJ1zt4Xt_kqHMwyIYrdMz9hXk-SNqtB8"/>
+</div>
+<h3 class="font-headline font-bold text-sm uppercase tracking-tight">ZEN_VOID</h3>
+<p class="font-label text-[10px] opacity-60 tracking-widest">PHILOSOPHICAL</p>
+</div>
+<!-- Related Card 5 -->
+<div class="group cursor-pointer hidden lg:block">
+<div class="aspect-[3/4] bg-surface-container-low mb-4 overflow-hidden border-b-4 border-transparent group-hover:border-primary transition-all">
+<img alt="Related Manga" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Geometric pattern of black and white triangles with a single red circle focal point" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfa2cTNpCXI17c8S8my3JDu0M8jo4-oZjLnxGahleiYcr1ti4vxTNiAqngHfTXndnZKbGFs3EhHqDIkrGxXrRXCxj9o4hCLhGMDWB07MX4CwGF739v2gXkaaHWfqXA5jBuxE0mfJ1QtOHqaFJKTPbGCsv5m4nhLbThmzp73KZ2sWjrbFb-EDwzwWBYft8XLvLiwkjuD0MIBSEmQBuIQF9XjN8EQPpHENvmbY7ca1bkxD_kI5XX6lkseyUFgEuBNv0BtfsswH9Jueo"/>
+</div>
+<h3 class="font-headline font-bold text-sm uppercase tracking-tight">PATTERN_Z</h3>
+<p class="font-label text-[10px] opacity-60 tracking-widest">AVANT-GARDE</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#161d16] dark:bg-[#0a0f0a] w-full py-12 flex flex-col md:flex-row justify-between items-center px-12 w-full">
+<div class="mb-6 md:mb-0">
+<span class="text-[#f3fcf0] font-black tracking-tighter uppercase font-headline">RONIN_COLLECT</span>
+<p class="text-[#f3fcf0] opacity-50 font-['Manrope'] text-[10px] tracking-widest uppercase mt-2">© 2024 THE EDITORIAL RONIN. ALL RIGHTS RESERVED.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-['Manrope'] text-[10px] tracking-widest uppercase text-[#f3fcf0] opacity-50 hover:opacity-100 transition-opacity underline-offset-4 hover:underline" href="#">Twitter</a>
+<a class="font-['Manrope'] text-[10px] tracking-widest uppercase text-[#f3fcf0] opacity-50 hover:opacity-100 transition-opacity underline-offset-4 hover:underline" href="#">Instagram</a>
+<a class="font-['Manrope'] text-[10px] tracking-widest uppercase text-[#f3fcf0] opacity-50 hover:opacity-100 transition-opacity underline-offset-4 hover:underline" href="#">Privacy</a>
+<a class="font-['Manrope'] text-[10px] tracking-widest uppercase text-[#f3fcf0] opacity-50 hover:opacity-100 transition-opacity underline-offset-4 hover:underline" href="#">Terms</a>
+<a class="font-['Manrope'] text-[10px] tracking-widest uppercase text-[#f3fcf0] opacity-50 hover:opacity-100 transition-opacity underline-offset-4 hover:underline" href="#">Contact</a>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Akira Mono | Add New Volume</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Manrope:wght@400;500;600&amp;family=Space_Grotesk:wght@500;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#1b1b1b",
+                    "secondary-fixed-dim": "#b0c7f1",
+                    "on-secondary-container": "#445a7f",
+                    "error": "#ba1a1a",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#dce5d9",
+                    "tertiary-container": "#747474",
+                    "on-primary-container": "#fffbff",
+                    "inverse-primary": "#ffb3b1",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#eaf3e7",
+                    "surface-dim": "#d4ddd1",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#5b403f",
+                    "on-tertiary-container": "#fcfcfc",
+                    "on-primary-fixed-variant": "#92001c",
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "on-secondary-fixed-variant": "#30476a",
+                    "tertiary": "#5c5c5c",
+                    "surface-container": "#e7f0e5",
+                    "surface-tint": "#bb152c",
+                    "surface": "#f3fcf0",
+                    "on-surface": "#161d16",
+                    "outline": "#8f6f6e",
+                    "inverse-surface": "#2a322b",
+                    "primary-fixed": "#ffdad8",
+                    "surface-container-low": "#edf6ea",
+                    "surface-bright": "#f3fcf0",
+                    "on-primary-fixed": "#410007",
+                    "on-secondary-fixed": "#001b3c",
+                    "on-secondary": "#ffffff",
+                    "background": "#f3fcf0",
+                    "surface-container-high": "#e2ebdf",
+                    "error-container": "#ffdad6",
+                    "secondary": "#485f84",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#e2e2e2",
+                    "secondary-container": "#bbd3fd",
+                    "secondary-fixed": "#d5e3ff",
+                    "primary-fixed-dim": "#ffb3b1",
+                    "surface-variant": "#dce5d9",
+                    "primary-container": "#db313f",
+                    "outline-variant": "#e4bebc",
+                    "on-background": "#161d16",
+                    "primary": "#b7102a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Manrope"],
+                    "label": ["Space Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+        .manga-header { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .data-label { font-family: 'Space Grotesk', sans-serif; }
+        .vertical-text { writing-mode: vertical-rl; }
+        input:focus, select:focus { outline: none !important; border-color: #b7102a !important; box-shadow: none !important; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-950/80 backdrop-blur-md flex justify-between items-center px-6 py-4 w-full">
+<div class="text-2xl font-black text-stone-900 dark:text-stone-50 tracking-tighter font-['Plus_Jakarta_Sans'] uppercase">
+            Akira Mono
+        </div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors font-['Plus_Jakarta_Sans'] tracking-tighter font-bold uppercase" href="#">Library</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors font-['Plus_Jakarta_Sans'] tracking-tighter font-bold uppercase" href="#">New Release</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors font-['Plus_Jakarta_Sans'] tracking-tighter font-bold uppercase" href="#">Collections</a>
+<a class="text-stone-900 dark:text-stone-50 border-b-4 border-red-600 pb-1 font-['Plus_Jakarta_Sans'] tracking-tighter font-bold uppercase" href="#">Archives</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined cursor-pointer text-stone-900">account_circle</span>
+</div>
+</nav>
+<main class="pt-24 pb-12 px-6 max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
+<aside class="md:w-1/3 flex flex-col gap-6">
+<div class="relative w-full aspect-[3/4] bg-surface-container-high overflow-hidden">
+<img alt="Comic Cover" class="w-full h-full object-cover grayscale contrast-125" data-alt="Monochromatic Japanese manga cover illustration with bold black ink lines and minimalist composition featuring a stoic samurai" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABiIH3Pc1j0BbjlR2B7s7RXEVCf2TJZWGku2bymWYWK9Rgr-ysKZu_NwOGBFnvJeSSXmcKfwtlGdwwG01gMfYmDC9f0935Aq-6mzunE3JfP7g8xMmQHIEKADoPksKZBfleTUWVrsLzzYtULvuN60PknPZAbMRYt3dx1r8er9834IxVyxE0EsrgnWUfmOGb0QIUOg8fxNOWME3B2sZz-AEg9duvwcV35dMfS-fVUTCi4LZM8vRBZ-UiGkywdXTEukk1SKdBrcbZmoU"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-multiply"></div>
+<div class="absolute top-4 right-4 vertical-text font-bold text-xs bg-primary text-on-primary px-1 py-3 data-label tracking-widest">
+                    ARCHIVE UNIT NO. 82
+                </div>
+</div>
+<div class="bg-surface-container-low p-6 space-y-4">
+<h1 class="manga-header text-4xl font-extrabold tracking-tighter leading-none text-on-surface uppercase">
+                    Vagabond: The Last Duel
+                </h1>
+<p class="text-sm font-medium text-on-surface-variant leading-relaxed">
+                    Miyamoto Musashi arrives at Ganryu Island. The final arc of Inoue's masterpiece is being processed for archival.
+                </p>
+<div class="pt-4 border-t border-outline-variant/30 flex justify-between items-end">
+<div>
+<span class="data-label text-[10px] text-primary font-bold">CURRENT COLLECTION</span>
+<div class="text-lg font-bold">14 VOLUMES</div>
+</div>
+<span class="material-symbols-outlined text-primary text-3xl">folder_managed</span>
+</div>
+</div>
+</aside>
+<section class="flex-1 bg-surface-container-lowest p-8 md:p-12 shadow-[0_20px_40px_rgba(22,29,22,0.06)] relative">
+<div class="absolute top-0 right-12 w-16 h-24 bg-surface-container-high opacity-20 flex items-center justify-center">
+<span class="vertical-text text-[10px] data-label font-bold text-on-surface">FORM_77_A</span>
+</div>
+<div class="mb-12">
+<h2 class="data-label text-xs font-bold text-primary tracking-[0.3em] mb-2">NEW VOLUME REGISTRATION</h2>
+<div class="h-1 w-24 bg-primary"></div>
+</div>
+<form class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+<div class="flex flex-col gap-2">
+<label class="data-label text-[11px] font-bold tracking-widest text-on-surface-variant uppercase">Volume Number</label>
+<input class="bg-transparent border-0 border-b-2 border-surface-container-highest p-2 text-xl font-bold font-headline focus:border-primary transition-all placeholder:text-surface-container-highest" placeholder="e.g. 037" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="data-label text-[11px] font-bold tracking-widest text-on-surface-variant uppercase">Release Date</label>
+<input class="bg-transparent border-0 border-b-2 border-surface-container-highest p-2 text-base font-bold focus:border-primary transition-all" type="date"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="data-label text-[11px] font-bold tracking-widest text-on-surface-variant uppercase">Price (USD)</label>
+<div class="relative">
+<span class="absolute left-2 top-1/2 -translate-y-1/2 text-primary font-bold">$</span>
+<input class="w-full bg-transparent border-0 border-b-2 border-surface-container-highest pl-6 p-2 text-xl font-bold focus:border-primary transition-all placeholder:text-surface-container-highest" placeholder="12.99" step="0.01" type="number"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="data-label text-[11px] font-bold tracking-widest text-on-surface-variant uppercase">Page Count</label>
+<input class="bg-transparent border-0 border-b-2 border-surface-container-highest p-2 text-xl font-bold focus:border-primary transition-all placeholder:text-surface-container-highest" placeholder="214" type="number"/>
+</div>
+<div class="md:col-span-2 flex flex-col gap-4 py-6">
+<label class="data-label text-[11px] font-bold tracking-widest text-on-surface-variant uppercase">Collection Status</label>
+<div class="flex gap-4">
+<label class="flex-1 cursor-pointer group">
+<input class="hidden peer" name="status" type="radio"/>
+<div class="border-2 border-surface-container-highest p-4 text-center peer-checked:bg-primary peer-checked:border-primary peer-checked:text-on-primary transition-all group-hover:bg-surface-container-low">
+<span class="data-label text-xs font-bold">OWNED</span>
+</div>
+</label>
+<label class="flex-1 cursor-pointer group">
+<input checked="" class="hidden peer" name="status" type="radio"/>
+<div class="border-2 border-surface-container-highest p-4 text-center peer-checked:bg-primary peer-checked:border-primary peer-checked:text-on-primary transition-all group-hover:bg-surface-container-low">
+<span class="data-label text-xs font-bold">WISHLIST</span>
+</div>
+</label>
+</div>
+</div>
+<div class="md:col-span-2 flex flex-col gap-2">
+<label class="data-label text-[11px] font-bold tracking-widest text-on-surface-variant uppercase">Archival Notes</label>
+<textarea class="bg-surface-container-low border-0 p-4 text-sm focus:bg-surface-container-high transition-all placeholder:text-stone-400" placeholder="Optional notes on edition, paper quality, or source..." rows="3"></textarea>
+</div>
+<div class="md:col-span-2 pt-8 flex items-center justify-between border-t border-outline-variant/30 mt-4">
+<div class="hidden md:block">
+<span class="data-label text-[10px] text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">lock</span> 
+                            SECURE STORAGE PROTOCOL ENABLED
+                        </span>
+</div>
+<button class="w-full md:w-auto bg-primary text-on-primary px-12 py-5 font-headline font-extrabold uppercase tracking-widest flex items-center justify-center gap-4 hover:brightness-110 active:scale-95 transition-all" type="submit">
+                        ARCHIVE_VOLUME
+                        <span class="material-symbols-outlined">add_box</span>
+</button>
+</div>
+</form>
+</section>
+</main>
+<footer class="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full bg-stone-100 dark:bg-stone-900 mt-20">
+<div class="font-black text-lg text-stone-900 dark:text-stone-50 font-['Plus_Jakarta_Sans'] tracking-tighter mb-8 md:mb-0">
+            AKIRA MONO
+        </div>
+<div class="flex flex-wrap justify-center gap-8 md:gap-12 mb-8 md:mb-0">
+<a class="font-['Space_Grotesk'] text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors" href="#">Privacy</a>
+<a class="font-['Space_Grotesk'] text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors" href="#">Terms</a>
+<a class="font-['Space_Grotesk'] text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors" href="#">Submission Guidelines</a>
+<a class="font-['Space_Grotesk'] text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors" href="#">Contact</a>
+</div>
+<div class="font-['Space_Grotesk'] text-[10px] uppercase tracking-widest text-stone-400">
+            © 2024 AKIRA MONO EDITORIAL. ALL RIGHTS RESERVED.
+        </div>
+</footer>
+</body></html>

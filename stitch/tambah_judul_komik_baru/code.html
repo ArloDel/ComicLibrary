@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Akira Mono | Add New Comic Title</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&amp;family=Manrope:wght@400;500;600&amp;family=Space_Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#1b1b1b",
+                    "secondary-fixed-dim": "#b0c7f1",
+                    "on-secondary-container": "#445a7f",
+                    "error": "#ba1a1a",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#dce5d9",
+                    "tertiary-container": "#747474",
+                    "on-primary-container": "#fffbff",
+                    "inverse-primary": "#ffb3b1",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#eaf3e7",
+                    "surface-dim": "#d4ddd1",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#5b403f",
+                    "on-tertiary-container": "#fcfcfc",
+                    "on-primary-fixed-variant": "#92001c",
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "on-secondary-fixed-variant": "#30476a",
+                    "tertiary": "#5c5c5c",
+                    "surface-container": "#e7f0e5",
+                    "surface-tint": "#bb152c",
+                    "surface": "#f3fcf0",
+                    "on-surface": "#161d16",
+                    "outline": "#8f6f6e",
+                    "inverse-surface": "#2a322b",
+                    "primary-fixed": "#ffdad8",
+                    "surface-container-low": "#edf6ea",
+                    "surface-bright": "#f3fcf0",
+                    "on-primary-fixed": "#410007",
+                    "on-secondary-fixed": "#001b3c",
+                    "on-secondary": "#ffffff",
+                    "background": "#f3fcf0",
+                    "surface-container-high": "#e2ebdf",
+                    "error-container": "#ffdad6",
+                    "secondary": "#485f84",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed": "#e2e2e2",
+                    "secondary-container": "#bbd3fd",
+                    "secondary-fixed": "#d5e3ff",
+                    "primary-fixed-dim": "#ffb3b1",
+                    "surface-variant": "#dce5d9",
+                    "primary-container": "#db313f",
+                    "outline-variant": "#e4bebc",
+                    "on-background": "#161d16",
+                    "primary": "#b7102a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Manrope"],
+                    "label": ["Space Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .vertical-text {
+            writing-mode: vertical-rl;
+        }
+        ::placeholder {
+            color: #8f6f6e;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-stone-950/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-stone-900 dark:text-stone-50 tracking-tighter uppercase font-headline">Akira Mono</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="font-headline tracking-tighter font-bold uppercase text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors" href="#">Library</a>
+<a class="font-headline tracking-tighter font-bold uppercase text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors" href="#">New Release</a>
+<a class="font-headline tracking-tighter font-bold uppercase text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors" href="#">Collections</a>
+<a class="font-headline tracking-tighter font-bold uppercase text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors" href="#">Archives</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-stone-900 dark:text-stone-50 p-2 hover:bg-stone-50 dark:hover:bg-stone-900 transition-all active:scale-95 duration-100" data-icon="account_circle">account_circle</button>
+</div>
+</div>
+</nav>
+<main class="pt-24 min-h-screen">
+<div class="max-w-[1400px] mx-auto px-6 md:px-12 py-12">
+<!-- Asymmetric Layout Container -->
+<div class="flex flex-col md:flex-row gap-16 items-start">
+<!-- Vertical Branding Accent -->
+<div class="hidden lg:flex flex-col items-center gap-8">
+<span class="vertical-text font-label text-xs tracking-widest text-primary uppercase">Manga Archival Form</span>
+<div class="w-[2px] h-32 bg-primary"></div>
+<span class="vertical-text font-label text-xs tracking-widest text-on-surface-variant uppercase">Tokyo / Kyoto</span>
+</div>
+<!-- Form Section -->
+<div class="flex-1 w-full space-y-12">
+<header class="space-y-2">
+<p class="font-label text-primary tracking-[0.2em] text-xs font-bold uppercase">Archive Submission</p>
+<h1 class="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter text-on-surface uppercase">Add New Comic Title</h1>
+</header>
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-12">
+<!-- Content Entry (8 columns) -->
+<div class="xl:col-span-8 space-y-10">
+<!-- Title Input -->
+<div class="group">
+<label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Primary Identification</label>
+<input class="w-full bg-transparent border-t-0 border-x-0 border-b-2 border-primary focus:ring-0 focus:border-on-surface px-0 py-4 text-4xl md:text-5xl font-headline font-black tracking-tight uppercase placeholder:opacity-20 transition-all" placeholder="ENTER TITLE NAME" type="text"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+<!-- Author -->
+<div>
+<label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Creator / Author</label>
+<input class="w-full bg-surface-container-low border-0 focus:ring-2 focus:ring-primary px-4 py-3 font-body text-on-surface placeholder:text-outline/40" placeholder="e.g. Akira Toriyama" type="text"/>
+</div>
+<!-- Genre -->
+<div>
+<label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Demographic / Genre</label>
+<div class="flex flex-wrap gap-2">
+<button class="bg-primary text-on-primary font-label text-[10px] px-4 py-2 uppercase tracking-tighter transition-all">Shonen</button>
+<button class="bg-surface-container-high text-on-surface-variant font-label text-[10px] px-4 py-2 uppercase tracking-tighter hover:bg-primary-fixed transition-all">Seinen</button>
+<button class="bg-surface-container-high text-on-surface-variant font-label text-[10px] px-4 py-2 uppercase tracking-tighter hover:bg-primary-fixed transition-all">Shojo</button>
+<button class="bg-surface-container-high text-on-surface-variant font-label text-[10px] px-4 py-2 uppercase tracking-tighter hover:bg-primary-fixed transition-all">Josei</button>
+</div>
+</div>
+</div>
+<!-- Description -->
+<div>
+<label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Narrative Synopsis</label>
+<textarea class="w-full bg-surface-container-low border-0 focus:ring-2 focus:ring-primary px-4 py-4 font-body text-on-surface leading-relaxed resize-none" placeholder="Describe the journey, the world, and the stakes..." rows="6"></textarea>
+</div>
+<!-- CTA -->
+<div class="pt-6">
+<button class="group relative inline-flex items-center justify-center w-full md:w-auto px-12 py-5 bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-extrabold tracking-tighter text-xl uppercase transition-all active:scale-95 shadow-lg shadow-primary/10">
+<span>SAVE_TITLE</span>
+<span class="material-symbols-outlined ml-3 group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Asset Entry (4 columns) -->
+<div class="xl:col-span-4 space-y-6">
+<label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant block">Visual Representation</label>
+<!-- Placeholder Image / Upload Zone -->
+<div class="relative group aspect-[2/3] bg-surface-container-high overflow-hidden flex flex-col items-center justify-center border-2 border-dashed border-outline-variant hover:border-primary transition-colors cursor-pointer">
+<div class="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-cover bg-center" data-alt="minimalist Japanese graphic art with bold black ink strokes on aged white paper background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDGGcIy2A_yjXoOdJgVQ0fGo6hPZOL3WCmInymRG460qrll2pP7bsxVv1-c-Z_ExmiE4lTDzcvz_6G-_WNxKHKOhUBgDII8IbrDDdOIsd59ambrxkEuMvsUZN8boeqxH7hEwjyVuj9GcKQUqSHGZGDDzfr-ynl_D9zQHEbG_iIsvx2WHC5YiXfikRkkpYafa7-keUBRA9Hi93rm6mrhf676wMXby1CvwUGZzms6k4ph-MZTk4kahSK3fy09PbFv-SL9t_415XaVZsg')"></div>
+<div class="relative z-10 flex flex-col items-center gap-4 text-center px-8">
+<div class="w-16 h-16 bg-surface-container-lowest flex items-center justify-center shadow-xl">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="add_photo_alternate">add_photo_alternate</span>
+</div>
+<div>
+<p class="font-headline font-bold text-on-surface text-lg uppercase tracking-tight">Upload Cover</p>
+<p class="font-body text-xs text-on-surface-variant mt-1">推奨サイズ: 1600 × 2400px (JPG/PNG)</p>
+</div>
+</div>
+</div>
+<div class="p-6 bg-surface-container-low">
+<h3 class="font-label text-[10px] uppercase tracking-widest text-primary mb-4 font-bold">Metadata Checklist</h3>
+<ul class="space-y-3">
+<li class="flex items-center gap-3 text-xs font-body text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                        High-Resolution Cover Asset
+                                    </li>
+<li class="flex items-center gap-3 text-xs font-body text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-outline-variant" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+                                        ISBN-13 Registration Number
+                                    </li>
+<li class="flex items-center gap-3 text-xs font-body text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-outline-variant" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+                                        Publisher Licensing Rights
+                                    </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-stone-100 dark:bg-stone-900 w-full border-t-0 mt-24">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full gap-8">
+<div class="flex flex-col gap-2 items-center md:items-start">
+<span class="font-black text-lg text-stone-900 dark:text-stone-50 font-headline uppercase tracking-tighter">Akira Mono Editorial</span>
+<p class="font-['Space_Grotesk'] text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400">© 2024 AKIRA MONO EDITORIAL. ALL RIGHTS RESERVED.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-['Space_Grotesk'] text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="font-['Space_Grotesk'] text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors opacity-80 hover:opacity-100" href="#">Terms</a>
+<a class="font-['Space_Grotesk'] text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors opacity-80 hover:opacity-100" href="#">Submission Guidelines</a>
+<a class="font-['Space_Grotesk'] text-xs uppercase tracking-widest text-stone-500 dark:text-stone-400 hover:text-red-600 transition-colors opacity-80 hover:opacity-100" href="#">Contact</a>
+</div>
+</div>
+</footer>
+</body></html>
