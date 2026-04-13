@@ -107,6 +107,10 @@
 <div class="flex items-center gap-4">
 <span class="material-symbols-outlined text-on-background opacity-70 cursor-pointer scale-105 transition-transform hover:text-primary">notifications</span>
 <img alt="User profile" class="w-8 h-8 rounded-none border border-outline-variant bg-surface-container-low" data-alt="close up minimalist portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoHCpM7RNCEIsVWdImVdX5zT1vJ81G74hS9cohqQ-12xik0QMHhLaRsncf70ztYw7Q5UWo6oPcFMWJCion0Snphx-fGhgDyh024_6wikr9CgXeKcGvqGthK-P4piyTVvCN6-fPbp02rhypzZvqNRARyC-yQ_jKbXjJZ2UH5-rUA3sYKPM6s8bI-JnA3RvsUO27zHgUydSb4QTYGjuio3ArWDPuyW7MFWv1PCtB6f4v-AwPfxtvK9ZOdfqUWNzZ-1E8JvIq59iC1lQ"/>
+<form action="{{ route('logout') }}" method="POST" class="inline">
+    @csrf
+    <button type="submit" class="font-label text-[10px] tracking-widest text-[#b7102a] hover:underline uppercase ml-2 pt-1 font-bold">LOGOUT</button>
+</form>
 </div>
 </div>
 </nav>
