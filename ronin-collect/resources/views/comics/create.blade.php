@@ -70,6 +70,12 @@
         </div>
         </div>
 
+        <!-- Tags / Genres -->
+        <div>
+        <label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Tags / Genres (Pisahkan dengan koma)</label>
+        <input name="tags_input" value="{{ old('tags_input') }}" class="w-full bg-surface-container-low border-0 focus:ring-2 focus:ring-primary px-4 py-3 font-body text-on-surface placeholder:text-outline/40 uppercase text-sm tracking-widest" placeholder="e.g. Action, Shonen" type="text"/>
+        </div>
+
         <!-- Description -->
         <div>
         <label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Narrative Synopsis</label>

@@ -16,7 +16,11 @@
 <p class="font-label text-xs tracking-[0.3em] text-primary uppercase">Total Titles: {{ $comics->count() }} / Last Updated: {{ date('d.m.y') }}</p>
 </div>
 <div class="flex flex-wrap gap-2">
-<span class="bg-primary text-on-primary px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer">ALL</span>
+@if(request('tag'))
+<a href="{{ route('comics.index') }}" class="bg-primary flex items-center gap-2 text-on-primary px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer hover:bg-primary-container transition-colors">FILTER: {{ request('tag') }} <span class="material-symbols-outlined text-[10px]">close</span></a>
+@else
+<a href="{{ route('comics.index') }}" class="bg-primary text-on-primary px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer">ALL</a>
+@endif
 <span class="bg-surface-container-high text-on-surface-variant px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer hover:bg-primary-fixed transition-colors">READ</span>
 <span class="bg-surface-container-high text-on-surface-variant px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer hover:bg-primary-fixed transition-colors">UNREAD</span>
 <span class="bg-surface-container-high text-on-surface-variant px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer hover:bg-primary-fixed transition-colors">FAVORITES</span>
@@ -39,6 +43,13 @@
         <span class="bg-primary-container text-white font-label text-[10px] tracking-widest px-4 py-1 uppercase mb-4 inline-block shadow-lg">CURRENT FOCUS</span>
         @endif
         <h4 class="font-headline font-black text-2xl md:text-3xl text-white tracking-tighter uppercase leading-tight mb-3">{{ $comic->title }}</h4>
+        @if($comic->tags->isNotEmpty())
+        <div class="flex flex-wrap gap-2 mb-3">
+            @foreach($comic->tags->take(3) as $tag)
+                <span class="text-white/60 text-[9px] font-label uppercase tracking-widest border border-white/20 px-2 py-0.5">{{ $tag->name }}</span>
+            @endforeach
+        </div>
+        @endif
         <div class="flex flex-wrap gap-2 justify-between items-center border-t border-white/20 pt-4">
         <span class="font-label text-[10px] tracking-widest text-white/70 uppercase">{{ $comic->author }}</span>
         <span class="bg-primary text-white font-label text-[10px] tracking-widest px-3 py-1 uppercase">{{ $comic->status }}</span>
@@ -61,9 +72,19 @@
         @endif
         </div>
         </div>
-        <div class="p-4 flex-1 flex flex-col justify-between bg-surface-container-lowest group-hover:bg-primary/5 transition-colors">
+        <div class="p-4 flex-1 flex flex-col bg-surface-container-lowest group-hover:bg-primary/5 transition-colors">
         <h4 class="font-headline font-bold text-sm md:text-base tracking-tighter uppercase mb-2 line-clamp-2" title="{{ $comic->title }}">{{ $comic->title }}</h4>
-        <div class="flex justify-between items-end mt-1">
+        @if($comic->tags->isNotEmpty())
+        <div class="flex flex-wrap gap-1 mb-2">
+            @foreach($comic->tags->take(2) as $tag)
+                <span class="bg-surface-variant/50 text-on-surface-variant px-1.5 py-0.5 text-[8px] font-label uppercase tracking-widest">{{ $tag->name }}</span>
+            @endforeach
+            @if($comic->tags->count() > 2)
+                <span class="text-on-surface-variant/50 px-1 py-0.5 text-[8px] font-label uppercase tracking-widest">+{{ $comic->tags->count() - 2 }}</span>
+            @endif
+        </div>
+        @endif
+        <div class="flex justify-between items-end mt-auto pt-1">
         <span class="font-label text-[9px] tracking-widest opacity-60 uppercase truncate flex-1 pr-2" title="{{ $comic->author }}">{{ $comic->author }}</span>
         <span class="material-symbols-outlined text-[16px] {{ strtolower($comic->priority ?? '') == 'extreme' ? 'text-primary' : 'text-on-surface-variant/30' }}" style="font-variation-settings: 'FILL' 1;">favorite</span>
         </div>

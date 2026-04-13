@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comic;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class ComicController extends Controller
@@ -15,9 +16,17 @@ class ComicController extends Controller
         return view('home', compact('latestAcquisitions', 'currentlyReading', 'wishlist'));
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $comics = Comic::withCount('volumes')->orderBy('title')->get();
+        $query = Comic::withCount('volumes')->with('tags');
+
+        if ($request->has('tag')) {
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->where('name', $request->tag);
+            });
+        }
+
+        $comics = $query->orderBy('title')->get();
         return view('comics.index', compact('comics'));
     }
 
@@ -35,7 +44,8 @@ class ComicController extends Controller
             'cover_image' => 'nullable|image|max:2048',
             'status' => 'required|in:reading,completed,wishlist,plan_to_read',
             'priority' => 'nullable|in:low,medium,high,extreme',
-            'price' => 'nullable|numeric'
+            'price' => 'nullable|numeric',
+            'tags_input' => 'nullable|string'
         ]);
 
         if ($request->hasFile('cover_image')) {
@@ -44,14 +54,30 @@ class ComicController extends Controller
             $file->move(public_path('uploads/covers'), $filename);
             $validated['cover_image'] = 'uploads/covers/' . $filename;
         }
+        
+        $tagsInput = $validated['tags_input'] ?? null;
+        unset($validated['tags_input']);
 
-        Comic::create($validated);
+        $comic = Comic::create($validated);
+
+        if ($tagsInput) {
+            $tagNames = array_filter(array_map('trim', explode(',', $tagsInput)));
+            $tagIds = [];
+            foreach ($tagNames as $tagName) {
+                if (!empty($tagName)) {
+                    $tagItem = Tag::firstOrCreate(['name' => strtoupper($tagName)]);
+                    $tagIds[] = $tagItem->id;
+                }
+            }
+            $comic->tags()->sync($tagIds);
+        }
+
         return redirect()->route('comics.index')->with('success', 'Comic added successfully!');
     }
 
     public function show(Comic $comic)
     {
-        $comic->load('volumes');
+        $comic->load('volumes', 'tags');
         return view('comics.show', compact('comic'));
     }
 

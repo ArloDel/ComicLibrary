@@ -12,4 +12,9 @@ class Comic extends Model
     {
         return $this->hasMany(Volume::class);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }
