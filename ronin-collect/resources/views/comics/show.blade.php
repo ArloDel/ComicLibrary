@@ -28,13 +28,14 @@
             {{ $comic->description ?? 'No narrative synopsis available for this title.' }}
         </p>
         
-        <div class="flex gap-4">
-            <form action="{{ route('comics.destroy', $comic) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="border-2 border-primary text-primary px-8 py-3 font-label text-xs tracking-widest uppercase font-bold hover:bg-primary hover:text-white transition-all">Delete Title</button>
-            </form>
-        </div>
+            <div class="flex gap-4">
+                <a href="{{ route('comics.edit', $comic) }}" class="border-2 border-surface-variant text-on-surface-variant px-8 py-3 font-label text-xs tracking-widest uppercase font-bold hover:bg-surface-variant hover:text-on-surface transition-all">Edit Title</a>
+                <form action="{{ route('comics.destroy', $comic) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="border-2 border-primary text-primary px-8 py-3 font-label text-xs tracking-widest uppercase font-bold hover:bg-primary hover:text-white transition-all">Delete Title</button>
+                </form>
+            </div>
     </div>
 </div>
 

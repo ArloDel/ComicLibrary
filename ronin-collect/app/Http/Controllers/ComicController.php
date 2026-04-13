@@ -83,12 +83,49 @@ class ComicController extends Controller
 
     public function edit(Comic $comic)
     {
-        // For later
+        $comic->load('tags');
+        $tagsString = $comic->tags->pluck('name')->implode(', ');
+        return view('comics.edit', compact('comic', 'tagsString'));
     }
 
     public function update(Request $request, Comic $comic)
     {
-        // For later
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'cover_image' => 'nullable|image|max:2048',
+            'status' => 'required|in:reading,completed,wishlist,plan_to_read',
+            'priority' => 'nullable|in:low,medium,high,extreme',
+            'price' => 'nullable|numeric',
+            'tags_input' => 'nullable|string'
+        ]);
+
+        if ($request->hasFile('cover_image')) {
+            $file = $request->file('cover_image');
+            $filename = time() . '_comic_' . str_replace(' ', '_', $file->getClientOriginalName());
+            $file->move(public_path('uploads/covers'), $filename);
+            $validated['cover_image'] = 'uploads/covers/' . $filename;
+        }
+
+        $tagsInput = $validated['tags_input'] ?? null;
+        unset($validated['tags_input']);
+
+        $comic->update($validated);
+
+        if ($tagsInput !== null) {
+            $tagNames = array_filter(array_map('trim', explode(',', $tagsInput)));
+            $tagIds = [];
+            foreach ($tagNames as $tagName) {
+                if (!empty($tagName)) {
+                    $tagItem = Tag::firstOrCreate(['name' => strtoupper($tagName)]);
+                    $tagIds[] = $tagItem->id;
+                }
+            }
+            $comic->tags()->sync($tagIds);
+        }
+
+        return redirect()->route('comics.show', $comic)->with('success', 'Comic updated successfully!');
     }
 
     public function destroy(Comic $comic)
