@@ -14,7 +14,31 @@ class ComicController extends Controller
         $latestAcquisitions = Comic::orderBy('created_at', 'desc')->take(3)->get();
         $currentlyReading = Comic::where('status', 'reading')->first();
         $wishlist = Comic::where('status', 'wishlist')->orderBy('priority', 'desc')->get();
-        return view('home', compact('latestAcquisitions', 'currentlyReading', 'wishlist'));
+        
+        // Statistics Computation
+        $ownedComicsQuery = Comic::where('status', '!=', 'wishlist');
+        $totalOwned = $ownedComicsQuery->count();
+        
+        $ownedComics = $ownedComicsQuery->withCount('volumes')->get();
+        $totalInvestment = $ownedComics->reduce(function ($carry, $comic) {
+            $volCount = max(1, $comic->volumes_count);
+            return $carry + ($comic->price * $volCount);
+        }, 0);
+        
+        $completedCount = Comic::where('status', 'completed')->count();
+        $completionRate = $totalOwned > 0 ? round(($completedCount / $totalOwned) * 100) : 0;
+        
+        $topGenres = Tag::withCount('comics')->orderBy('comics_count', 'desc')->take(3)->get();
+
+        return view('home', compact(
+            'latestAcquisitions', 
+            'currentlyReading', 
+            'wishlist', 
+            'totalOwned', 
+            'totalInvestment', 
+            'completionRate', 
+            'topGenres'
+        ));
     }
 
     public function index(Request $request)

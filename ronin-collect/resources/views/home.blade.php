@@ -37,6 +37,54 @@
 </div>
 </section>
 
+<!-- Archival Telemetry / Statistics -->
+<section class="mt-20 px-8 md:px-16 grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
+    <!-- Value -->
+    <div class="border-t-2 border-on-surface pt-6 pb-8 relative group">
+        <div class="absolute w-full h-0 bg-surface-container-high left-0 bottom-0 top-0 -z-10 group-hover:top-0 transition-all duration-500"></div>
+        <span class="font-label text-[10px] tracking-widest text-on-surface-variant uppercase block mb-4">Total Appraised Value</span>
+        <div class="text-6xl md:text-7xl font-headline font-black tracking-tighter text-on-surface flex items-start">
+            <span class="text-primary text-3xl mt-2 mr-2 font-bold">Rp</span>
+            <span>{{ number_format($totalInvestment, 0, ',', '.') }}</span>
+        </div>
+    </div>
+    
+    <!-- Count & Completion -->
+    <div class="border-t-4 border-primary pt-6 pb-8 bg-surface-container px-8 flex justify-between items-end group relative overflow-hidden">
+        <!-- Abstract shape -->
+        <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-primary/5 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700"></div>
+        <div class="z-10">
+            <span class="font-label text-[10px] tracking-[0.2em] text-primary uppercase block mb-2 font-bold">Archives Indexed</span>
+            <div class="text-7xl font-headline font-black tracking-tighter text-on-surface leading-none">{{ $totalOwned }}</div>
+        </div>
+        <div class="text-right z-10 pb-1">
+            <span class="font-label text-[10px] tracking-widest text-on-surface-variant uppercase block mb-2">Completion Limit</span>
+            <div class="text-4xl text-on-surface font-headline font-extrabold">{{ $completionRate }}<span class="text-primary ml-1">%</span></div>
+        </div>
+    </div>
+
+    <!-- Top Genres -->
+    <div class="border-t-2 border-on-surface pt-6 pb-8 flex flex-col justify-between">
+        <span class="font-label text-[10px] tracking-widest text-on-surface-variant uppercase block mb-4">Dominant Thematic Arcs</span>
+        <div class="space-y-4">
+            @forelse($topGenres as $genre)
+            <div class="group/genre">
+                <div class="flex justify-between items-end mb-1">
+                    <span class="font-headline font-bold text-sm uppercase text-on-surface tracking-widest group-hover/genre:text-primary transition-colors">{{ $genre->name }}</span>
+                    <span class="font-label text-[10px] font-bold text-on-surface-variant">{{ $genre->comics_count }} VOL</span>
+                </div>
+                <!-- Subtle line bar -->
+                <div class="w-full h-[2px] bg-outline/10">
+                    <div class="h-full bg-primary origin-left scale-x-0 group-hover/genre:scale-x-100 transition-transform duration-500 ease-out" style="width: {{ min(($genre->comics_count / max($totalOwned, 1)) * 100, 100) }}%"></div>
+                </div>
+            </div>
+            @empty
+            <span class="text-xs font-label text-on-surface-variant uppercase font-bold">No categorical data available.</span>
+            @endforelse
+        </div>
+    </div>
+</section>
+
 <!-- Spotlight: Currently Reading -->
 <section class="mt-20 px-8 md:px-16">
 <div class="flex items-center gap-4 mb-12">
