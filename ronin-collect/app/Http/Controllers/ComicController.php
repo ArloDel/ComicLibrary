@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comic;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ComicController extends Controller
 {
@@ -42,6 +43,7 @@ class ComicController extends Controller
             'author' => 'required|string|max:255',
             'description' => 'nullable|string',
             'cover_image' => 'nullable|image|max:2048',
+            'cover_image_url' => 'nullable|url',
             'status' => 'required|in:reading,completed,wishlist,plan_to_read',
             'priority' => 'nullable|in:low,medium,high,extreme',
             'price' => 'nullable|numeric',
@@ -53,7 +55,24 @@ class ComicController extends Controller
             $filename = time() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
             $file->move(public_path('uploads/covers'), $filename);
             $validated['cover_image'] = 'uploads/covers/' . $filename;
+        } elseif ($request->filled('cover_image_url')) {
+            try {
+                $url = $request->input('cover_image_url');
+                $response = Http::get($url);
+                if ($response->successful()) {
+                    $filename = time() . '_api_cover.jpg';
+                    $dir = public_path('uploads/covers');
+                    if (!file_exists($dir)) {
+                        mkdir($dir, 0755, true);
+                    }
+                    file_put_contents($dir . '/' . $filename, $response->body());
+                    $validated['cover_image'] = 'uploads/covers/' . $filename;
+                }
+            } catch (\Exception $e) {
+                // Silently fail and leave cover_image null
+            }
         }
+        unset($validated['cover_image_url']);
         
         $tagsInput = $validated['tags_input'] ?? null;
         unset($validated['tags_input']);

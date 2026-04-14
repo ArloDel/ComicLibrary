@@ -15,10 +15,23 @@
 
 <!-- Form Section -->
 <div class="flex-1 w-full space-y-12">
-<header class="space-y-2">
+<header class="space-y-2 mb-8">
 <p class="font-label text-primary tracking-[0.2em] text-xs font-bold uppercase">Archive Submission</p>
 <h1 class="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter text-on-surface uppercase">Add New Comic Title</h1>
 </header>
+
+<!-- MAL Auto-fill UI -->
+<div class="bg-surface-container-low p-6 mb-12 space-y-4 border-l-4 border-primary shadow-sm relative">
+    <label class="font-label text-[10px] uppercase tracking-widest text-primary block font-bold">Auto-fill via MyAnimeList (Jikan API)</label>
+    <div class="flex flex-col md:flex-row gap-4 relative">
+        <input type="text" id="mal_search_input" class="flex-1 bg-surface border-0 focus:ring-2 focus:ring-primary px-4 py-3 font-body text-on-surface placeholder:text-outline/40" placeholder="Enter manga title...">
+        <button type="button" id="mal_search_btn" class="px-8 py-3 bg-primary text-on-primary font-headline font-bold tracking-widest uppercase hover:bg-primary-container hover:text-on-primary-container transition-all flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-sm" data-icon="search">search</span> Search
+        </button>
+    </div>
+    <!-- Dropdown for API results -->
+    <div id="mal_results" class="hidden absolute top-full left-0 w-full mt-2 bg-surface-container-high border-t-2 border-primary shadow-2xl max-h-96 overflow-y-auto z-[100] divide-y divide-outline/10"></div>
+</div>
 
 <form action="{{ route('comics.store') }}" method="POST" class="grid grid-cols-1 xl:grid-cols-12 gap-12" enctype="multipart/form-data">
     @csrf
@@ -94,7 +107,14 @@
     <!-- Asset Entry (4 columns) -->
     <div class="xl:col-span-4 space-y-6">
         <label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant block">Visual Representation (Image Upload)</label>
-        <input name="cover_image" type="file" accept="image/*" class="w-full bg-surface-container-low border-0 focus:ring-2 focus:ring-primary px-4 py-3 font-body text-on-surface"/>
+        <input name="cover_image" id="cover_image" type="file" accept="image/*" class="w-full bg-surface-container-low border-0 focus:ring-2 focus:ring-primary px-4 py-3 font-body text-on-surface"/>
+        <input type="hidden" name="cover_image_url" id="cover_image_url">
+        
+        <!-- API Cover Preview -->
+        <div id="cover_preview_container" class="hidden mt-6">
+            <label class="font-label text-[10px] uppercase tracking-widest text-primary block mb-2 font-bold">Fetched Cover Preview</label>
+            <div id="cover_preview" class="w-full aspect-[2/3] bg-surface-container-high bg-cover bg-center border border-outline/20 shadow-md"></div>
+        </div>
         
         <div class="p-6 bg-surface-container-low mt-8">
         <h3 class="font-label text-[10px] uppercase tracking-widest text-primary mb-4 font-bold">Metadata Checklist</h3>
@@ -115,4 +135,143 @@
 </div>
 </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchBtn = document.getElementById('mal_search_btn');
+    const searchInput = document.getElementById('mal_search_input');
+    const resultsContainer = document.getElementById('mal_results');
+
+    // Form fields to autofill
+    const inputTitle = document.querySelector('input[name="title"]');
+    const inputAuthor = document.querySelector('input[name="author"]');
+    const inputTags = document.querySelector('input[name="tags_input"]');
+    const inputDesc = document.querySelector('textarea[name="description"]');
+    const hiddenCoverUrl = document.getElementById('cover_image_url');
+    
+    // Preview container
+    const previewContainer = document.getElementById('cover_preview_container');
+    const previewDiv = document.getElementById('cover_preview');
+
+    searchBtn.addEventListener('click', performSearch);
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            performSearch();
+        }
+    });
+
+    async function performSearch() {
+        const query = searchInput.value.trim();
+        if (!query) return;
+
+        searchBtn.innerHTML = '<span class="material-symbols-outlined text-sm animate-spin" data-icon="progress_activity">progress_activity</span>';
+        resultsContainer.innerHTML = '';
+        resultsContainer.classList.remove('hidden');
+
+        const graphqlQuery = `
+        query ($search: String) {
+            Page(page: 1, perPage: 5) {
+                media(search: $search, type: MANGA) {
+                    title { romaji english }
+                    description(asHtml: false)
+                    coverImage { large }
+                    staff(perPage: 1) { edges { node { name { full } } } }
+                    genres
+                }
+            }
+        }`;
+
+        try {
+            const response = await fetch('https://graphql.anilist.co', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    query: graphqlQuery,
+                    variables: { search: query }
+                })
+            });
+            const result = await response.json();
+            const mangas = result.data?.Page?.media || [];
+
+            if (mangas.length > 0) {
+                renderResults(mangas);
+            } else {
+                resultsContainer.innerHTML = '<div class="p-4 text-on-surface-variant text-sm text-center">No results found on AniList.</div>';
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            resultsContainer.innerHTML = '<div class="p-4 text-primary text-sm font-bold text-center">Failed to fetch data. Try again.</div>';
+        } finally {
+            searchBtn.innerHTML = '<span class="material-symbols-outlined text-sm" data-icon="search">search</span> Search';
+        }
+    }
+
+    function renderResults(mangas) {
+        resultsContainer.innerHTML = '';
+        mangas.forEach(manga => {
+            const item = document.createElement('div');
+            item.className = 'flex items-center gap-4 p-4 hover:bg-surface-container cursor-pointer transition-colors';
+            
+            const title = manga.title.english || manga.title.romaji;
+            let author = '';
+            if (manga.staff && manga.staff.edges && manga.staff.edges.length > 0) {
+                author = manga.staff.edges[0].node.name.full;
+            }
+            const imgUrl = manga.coverImage?.large;
+            
+            item.innerHTML = `
+                <img src="${imgUrl}" alt="Cover" class="w-12 h-16 object-cover border border-outline/20">
+                <div>
+                    <h4 class="font-headline font-bold text-on-surface text-lg leading-tight uppercase line-clamp-1">${title}</h4>
+                    <span class="text-xs font-label uppercase tracking-widest text-on-surface-variant">${author}</span>
+                </div>
+            `;
+            
+            item.addEventListener('click', () => {
+                selectManga(manga);
+                resultsContainer.classList.add('hidden');
+                searchInput.value = '';
+            });
+            
+            resultsContainer.appendChild(item);
+        });
+    }
+
+    function selectManga(manga) {
+        inputTitle.value = manga.title.english || manga.title.romaji || '';
+        
+        if (manga.staff && manga.staff.edges && manga.staff.edges.length > 0) {
+            inputAuthor.value = manga.staff.edges[0].node.name.full || '';
+        }
+        
+        let allTags = [];
+        if (manga.genres) allTags = manga.genres;
+        inputTags.value = allTags.join(', ');
+        
+        if (manga.description) {
+            let cleanSynopsis = manga.description.replace(/<[^>]*>?/gm, '').trim();
+            inputDesc.value = cleanSynopsis;
+        }
+        
+        const imgUrl = manga.coverImage?.large;
+        if (imgUrl) {
+            hiddenCoverUrl.value = imgUrl;
+            previewContainer.classList.remove('hidden');
+            previewDiv.style.backgroundImage = `url('${imgUrl}')`;
+        }
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!resultsContainer.contains(e.target) && e.target !== searchInput && e.target !== searchBtn) {
+            resultsContainer.classList.add('hidden');
+        }
+    });
+});
+</script>
+
 @endsection
