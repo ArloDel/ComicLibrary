@@ -59,6 +59,7 @@ class VolumeController extends Controller
             'comic_id' => 'required|exists:comics,id',
             'volume_number' => 'required|string',
             'cover_image' => 'nullable|image|max:2048',
+            'cover_image_url' => 'nullable|url',
             'acquisition_date' => 'nullable|date',
             'is_owned' => 'boolean'
         ]);
@@ -68,6 +69,30 @@ class VolumeController extends Controller
             $filename = time() . '_vol_' . str_replace(' ', '_', $file->getClientOriginalName());
             $file->move(public_path('uploads/covers'), $filename);
             $validated['cover_image'] = 'uploads/covers/' . $filename;
+        } elseif ($request->filled('cover_image_url')) {
+            try {
+                $url = $request->input('cover_image_url');
+                $response = \Illuminate\Support\Facades\Http::get($url);
+                
+                if ($response->successful()) {
+                    $name = basename(parse_url($url, PHP_URL_PATH));
+                    $name = preg_replace("/[^a-zA-Z0-9\._-]/", "", $name);
+                    if (empty($name) || !preg_match('/\.(jpg|jpeg|png|gif|webp)$/i', $name)) {
+                        $name = 'downloaded_' . uniqid() . '.jpg';
+                    }
+                    $filename = time() . '_vol_' . $name;
+                    $uploadPath = public_path('uploads/covers');
+                    if (!file_exists($uploadPath)) {
+                        mkdir($uploadPath, 0755, true);
+                    }
+                    file_put_contents($uploadPath . '/' . $filename, $response->body());
+                    $validated['cover_image'] = 'uploads/covers/' . $filename;
+                } else {
+                    return back()->withInput()->withErrors(['cover_image_url' => 'Gagal mengunduh gambar dari URL.']);
+                }
+            } catch (\Exception $e) {
+                return back()->withInput()->withErrors(['cover_image_url' => 'Gagal mengunduh gambar dari URL. Pastikan URL valid dan dapat diakses.']);
+            }
         }
 
         $volume->update($validated);

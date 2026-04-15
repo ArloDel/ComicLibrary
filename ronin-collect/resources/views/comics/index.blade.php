@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'My Collection')
+@section('title', 'Koleksiku')
 
 @section('extra_css')
 <style>
@@ -12,18 +12,18 @@
 <!-- Header & Filter Area -->
 <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
 <div>
-<h1 class="font-headline text-5xl font-extrabold tracking-tighter uppercase mb-2">MY_COLLECTION</h1>
-<p class="font-label text-xs tracking-[0.3em] text-primary uppercase">Total Titles: {{ $comics->count() }} / Last Updated: {{ date('d.m.y') }}</p>
+<h1 class="font-headline text-5xl font-extrabold tracking-tighter uppercase mb-2">KOLEKSIKU</h1>
+<p class="font-label text-xs tracking-[0.3em] text-primary uppercase">Total Judul: {{ $comics->count() }} / Pembaruan Terakhir: {{ date('d.m.y') }}</p>
 </div>
 <div class="flex flex-wrap gap-2">
 @if(request('tag'))
 <a href="{{ route('comics.index') }}" class="bg-primary flex items-center gap-2 text-on-primary px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer hover:bg-primary-container transition-colors">FILTER: {{ request('tag') }} <span class="material-symbols-outlined text-[10px]">close</span></a>
 @else
-<a href="{{ route('comics.index') }}" class="bg-primary text-on-primary px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer">ALL</a>
+<a href="{{ route('comics.index') }}" class="bg-primary text-on-primary px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer">SEMUA</a>
 @endif
-<span class="bg-surface-container-high text-on-surface-variant px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer hover:bg-primary-fixed transition-colors">READ</span>
-<span class="bg-surface-container-high text-on-surface-variant px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer hover:bg-primary-fixed transition-colors">UNREAD</span>
-<span class="bg-surface-container-high text-on-surface-variant px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer hover:bg-primary-fixed transition-colors">FAVORITES</span>
+<span class="bg-surface-container-high text-on-surface-variant px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer hover:bg-primary-fixed transition-colors">DIBACA</span>
+<span class="bg-surface-container-high text-on-surface-variant px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer hover:bg-primary-fixed transition-colors">BELUM DIBACA</span>
+<span class="bg-surface-container-high text-on-surface-variant px-4 py-1 font-label text-[10px] tracking-widest uppercase cursor-pointer hover:bg-primary-fixed transition-colors">FAVORIT</span>
 </div>
 </header>
 
@@ -40,7 +40,7 @@
         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
         <div class="absolute bottom-0 left-0 p-6 w-full">
         @if($comic->status == 'reading')
-        <span class="bg-primary-container text-white font-label text-[10px] tracking-widest px-4 py-1 uppercase mb-4 inline-block shadow-lg">CURRENT FOCUS</span>
+        <span class="bg-primary-container text-white font-label text-[10px] tracking-widest px-4 py-1 uppercase mb-4 inline-block shadow-lg">FOKUS SAAT INI</span>
         @endif
         <h4 class="font-headline font-black text-2xl md:text-3xl text-white tracking-tighter uppercase leading-tight mb-3">{{ $comic->title }}</h4>
         @if($comic->tags->isNotEmpty())
@@ -66,7 +66,7 @@
         <img alt="{{ $comic->title }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="{{ $comic->cover_image ? asset($comic->cover_image) : 'https://lh3.googleusercontent.com/aida-public/AB6AXuBuSLbVuMgYMIEW7X8D_vNi_sj6FYjyq59jLA3de4cLKh64Yg_hk2pa2EDKrDeVwYjAu-qqI6b0uZk6q2mv3rt0HHns_JUPL4hFeyt6_eR_tNieEhemSlnOn8iUk9ttdNtfP5ucf1JgN5imwGgynUrT-pz0SxHu7Rq4YCoAcO0pPbC-lChHU1cEnOVY4KtVctUM1T5DvaCceLaykp_cVPk01L7DeDCwM1CjA4eZkbZQU6wcFwMT7Ijd6JEGKuUsKEe8gtoDw05_tDM' }}"/>
         <div class="absolute top-0 right-0 p-3">
         @if($comic->status == 'completed' || $comic->status == 'reading')
-        <span class="bg-primary text-white font-label text-[9px] tracking-widest px-2 py-1 uppercase shadow-sm">{{ $comic->status }}</span>
+        <span class="bg-primary text-white font-label text-[9px] tracking-widest px-2 py-1 uppercase shadow-sm">{{ str_replace('_', ' ', str_replace('completed', 'selesai', str_replace('reading', 'sedang dibaca', $comic->status))) }}</span>
         @else
         <span class="bg-on-surface/80 backdrop-blur-sm text-white font-label text-[9px] tracking-widest px-2 py-1 uppercase shadow-sm">{{ str_replace('_', ' ', $comic->status) }}</span>
         @endif
@@ -95,7 +95,7 @@
 
 @empty
     <div class="col-span-full py-20 text-center font-label tracking-widest text-on-surface/50 uppercase">
-        No titles found in your collection.
+        Tidak ada judul ditemukan di koleksi Anda.
     </div>
 @endforelse
 </section>

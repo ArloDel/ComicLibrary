@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $comic->title . ' - Details')
+@section('title', $comic->title . ' - Detail')
 
 @section('content')
 <div class="max-w-[1400px] mx-auto py-12">
@@ -12,7 +12,7 @@
     </div>
     <div class="md:col-span-8 flex flex-col justify-center">
         <div class="flex flex-wrap items-center gap-4 mb-4">
-            <span class="font-label text-primary tracking-[0.2em] text-xs font-bold uppercase">{{ str_replace('_', ' ', $comic->status) }}</span>
+            <span class="font-label text-primary tracking-[0.2em] text-xs font-bold uppercase">{{ str_replace('_', ' ', str_replace('completed', 'selesai', str_replace('reading', 'sedang dibaca', str_replace('plan_to_read', 'rencana dibaca', str_replace('wishlist', 'incaran', strtolower($comic->status)))))) }}</span>
             @if($comic->tags->isNotEmpty())
             <span class="font-label text-outline tracking-[0.2em] text-xs font-bold uppercase">
                 // 
@@ -23,17 +23,17 @@
             @endif
         </div>
         <h1 class="text-6xl md:text-8xl font-headline font-extrabold tracking-tighter text-on-surface uppercase mb-6">{{ $comic->title }}</h1>
-        <h2 class="text-2xl font-headline text-on-surface-variant uppercase tracking-widest mb-8">Author // {{ $comic->author }}</h2>
+        <h2 class="text-2xl font-headline text-on-surface-variant uppercase tracking-widest mb-8">Kreator // {{ $comic->author }}</h2>
         <p class="font-body text-xl text-on-surface leading-relaxed max-w-3xl mb-8">
-            {{ $comic->description ?? 'No narrative synopsis available for this title.' }}
+            {{ $comic->description ?? 'Tidak ada sinopsis naratif tersedia untuk judul ini.' }}
         </p>
         
             <div class="flex gap-4">
-                <a href="{{ route('comics.edit', $comic) }}" class="border-2 border-surface-variant text-on-surface-variant px-8 py-3 font-label text-xs tracking-widest uppercase font-bold hover:bg-surface-variant hover:text-on-surface transition-all">Edit Title</a>
+                <a href="{{ route('comics.edit', $comic) }}" class="border-2 border-surface-variant text-on-surface-variant px-8 py-3 font-label text-xs tracking-widest uppercase font-bold hover:bg-surface-variant hover:text-on-surface transition-all">Edit Judul</a>
                 <form action="{{ route('comics.destroy', $comic) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="border-2 border-primary text-primary px-8 py-3 font-label text-xs tracking-widest uppercase font-bold hover:bg-primary hover:text-white transition-all">Delete Title</button>
+                    <button type="submit" class="border-2 border-primary text-primary px-8 py-3 font-label text-xs tracking-widest uppercase font-bold hover:bg-primary hover:text-white transition-all" onclick="return confirm('Apakah Anda yakin ingin menghapus arsip ini?')">Hapus Judul</button>
                 </form>
             </div>
     </div>
@@ -42,8 +42,8 @@
 <!-- Volumes Section -->
 <div class="border-t border-surface-variant/30 pt-16">
     <div class="flex justify-between items-end mb-10">
-        <h3 class="font-headline font-extrabold text-4xl uppercase tracking-tighter">Volumes</h3>
-        <a href="{{ route('volumes.create', ['comic_id' => $comic->id]) }}" class="font-label text-xs tracking-widest text-[#b7102a] hover:underline font-bold mr-4">ADD VOLUME</a>
+        <h3 class="font-headline font-extrabold text-4xl uppercase tracking-tighter">Volume</h3>
+        <a href="{{ route('volumes.create', ['comic_id' => $comic->id]) }}" class="font-label text-xs tracking-widest text-[#b7102a] hover:underline font-bold mr-4">TAMBAH VOLUME</a>
         <span class="font-label text-xs tracking-widest text-primary font-bold border-l-2 pl-4 border-primary/20">Total: {{ $comic->volumes->count() }}</span>
     </div>
     
@@ -58,14 +58,14 @@
             </div>
             <div class="flex justify-between items-center mt-2 px-1">
                 <p class="font-label text-[10px] tracking-widest text-on-surface-variant uppercase">
-                    {{ $volume->acquisition_date ? $volume->acquisition_date->format('M Y') : 'Unknown' }}
+                    {{ $volume->acquisition_date ? $volume->acquisition_date->format('M Y') : 'Tidak Diketahui' }}
                 </p>
                 <a href="{{ route('volumes.edit', $volume) }}" class="text-primary hover:underline font-label text-[10px] tracking-widest">EDIT</a>
             </div>
         </div>
         @empty
         <div class="col-span-full py-12 text-center font-label tracking-widest text-on-surface/50 uppercase">
-            No volumes associated with this title yet.
+            Belum ada volume yang tercatat untuk judul ini.
         </div>
         @endforelse
     </div>
