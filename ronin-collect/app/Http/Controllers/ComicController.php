@@ -82,18 +82,36 @@ class ComicController extends Controller
         } elseif ($request->filled('cover_image_url')) {
             try {
                 $url = $request->input('cover_image_url');
-                $response = Http::get($url);
+                // Add browser-like headers so CDNs (MangaDex, AniList, Google Books) don't block us
+                $response = Http::withHeaders([
+                    'User-Agent'  => 'Mozilla/5.0 (compatible; RoninCollect/1.0)',
+                    'Accept'      => 'image/webp,image/apng,image/*,*/*;q=0.8',
+                    'Referer'     => parse_url($url, PHP_URL_SCHEME) . '://' . parse_url($url, PHP_URL_HOST) . '/',
+                ])->timeout(15)->get($url);
+
                 if ($response->successful()) {
-                    $filename = time() . '_api_cover.jpg';
+                    // Detect extension from Content-Type header
+                    $contentType = $response->header('Content-Type');
+                    $ext = match(true) {
+                        str_contains($contentType, 'png')  => 'png',
+                        str_contains($contentType, 'webp') => 'webp',
+                        str_contains($contentType, 'gif')  => 'gif',
+                        default                            => 'jpg',
+                    };
+                    $filename = time() . '_api_cover.' . $ext;
                     $dir = public_path('uploads/covers');
                     if (!file_exists($dir)) {
                         mkdir($dir, 0755, true);
                     }
                     file_put_contents($dir . '/' . $filename, $response->body());
                     $validated['cover_image'] = 'uploads/covers/' . $filename;
+                } else {
+                    // Fallback: store the remote URL directly so the image still shows
+                    $validated['cover_image'] = $url;
                 }
             } catch (\Exception $e) {
-                // Silently fail and leave cover_image null
+                // Last resort: store URL directly
+                $validated['cover_image'] = $request->input('cover_image_url');
             }
         }
         unset($validated['cover_image_url']);
