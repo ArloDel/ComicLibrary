@@ -21,7 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('volumes', VolumeController::class)->except(['index', 'show']);
 
     // API Proxy routes (server-side calls to avoid CORS)
-    Route::get('/api-proxy/mangadex', [ApiProxyController::class, 'mangadex'])->name('proxy.mangadex');
-    Route::get('/api-proxy/anilist', [ApiProxyController::class, 'anilist'])->name('proxy.anilist');
+    Route::get('/api-proxy/mangadex',    [ApiProxyController::class, 'mangadex'])->name('proxy.mangadex');
+    Route::get('/api-proxy/anilist',     [ApiProxyController::class, 'anilist'])->name('proxy.anilist');
     Route::get('/api-proxy/googlebooks', [ApiProxyController::class, 'googlebooks'])->name('proxy.googlebooks');
+    Route::get('/api-proxy/openlibrary', [ApiProxyController::class, 'openlibrary'])->name('proxy.openlibrary');
 });

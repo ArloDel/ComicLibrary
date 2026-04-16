@@ -66,9 +66,9 @@
         <img alt="{{ $comic->title }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="{{ $comic->cover_image ? asset($comic->cover_image) : 'https://lh3.googleusercontent.com/aida-public/AB6AXuBuSLbVuMgYMIEW7X8D_vNi_sj6FYjyq59jLA3de4cLKh64Yg_hk2pa2EDKrDeVwYjAu-qqI6b0uZk6q2mv3rt0HHns_JUPL4hFeyt6_eR_tNieEhemSlnOn8iUk9ttdNtfP5ucf1JgN5imwGgynUrT-pz0SxHu7Rq4YCoAcO0pPbC-lChHU1cEnOVY4KtVctUM1T5DvaCceLaykp_cVPk01L7DeDCwM1CjA4eZkbZQU6wcFwMT7Ijd6JEGKuUsKEe8gtoDw05_tDM' }}"/>
         <div class="absolute top-0 right-0 p-3">
         @if($comic->status == 'completed' || $comic->status == 'reading')
-        <span class="bg-primary text-white font-label text-[9px] tracking-widest px-2 py-1 uppercase shadow-sm">{{ str_replace('_', ' ', str_replace('completed', 'selesai', str_replace('reading', 'sedang dibaca', $comic->status))) }}</span>
+        <span class="bg-primary text-white font-label text-[9px] tracking-widest px-2 py-1 uppercase shadow-sm">{{ $comic->statusLabel() }}</span>
         @else
-        <span class="bg-on-surface/80 backdrop-blur-sm text-white font-label text-[9px] tracking-widest px-2 py-1 uppercase shadow-sm">{{ str_replace('_', ' ', $comic->status) }}</span>
+        <span class="bg-on-surface/80 backdrop-blur-sm text-white font-label text-[9px] tracking-widest px-2 py-1 uppercase shadow-sm">{{ $comic->statusLabel() }}</span>
         @endif
         </div>
         </div>

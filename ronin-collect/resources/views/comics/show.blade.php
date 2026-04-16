@@ -12,7 +12,7 @@
     </div>
     <div class="md:col-span-8 flex flex-col justify-center">
         <div class="flex flex-wrap items-center gap-4 mb-4">
-            <span class="font-label text-primary tracking-[0.2em] text-xs font-bold uppercase">{{ str_replace('_', ' ', str_replace('completed', 'selesai', str_replace('reading', 'sedang dibaca', str_replace('plan_to_read', 'rencana dibaca', str_replace('wishlist', 'incaran', strtolower($comic->status)))))) }}</span>
+            <span class="font-label text-primary tracking-[0.2em] text-xs font-bold uppercase">{{ $comic->statusLabel() }}</span>
             @if($comic->tags->isNotEmpty())
             <span class="font-label text-outline tracking-[0.2em] text-xs font-bold uppercase">
                 // 
