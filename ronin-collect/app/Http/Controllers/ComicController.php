@@ -38,6 +38,25 @@ class ComicController extends Controller
         ));
     }
 
+    public function narrativeReport(\App\Services\OpenAIService $openAIService)
+    {
+        // Get high level stats
+        $latest = Comic::orderBy('created_at', 'desc')->first();
+        $topGenre = Tag::withCount('comics')->orderBy('comics_count', 'desc')->first();
+        
+        [$totalOwned, $totalInvestment] = $this->computeStats();
+
+        // Use the service to generate text
+        $narrative = $openAIService->generateCollectionNarrative(
+            $totalOwned,
+            $totalInvestment,
+            $topGenre?->name,
+            $latest?->title
+        );
+
+        return response()->json(['narrative' => $narrative]);
+    }
+
     // -------------------------------------------------------------------------
     // Resource CRUD
     // -------------------------------------------------------------------------

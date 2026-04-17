@@ -85,6 +85,32 @@
     </div>
 </section>
 
+<!-- AI Narrative Report -->
+<section class="mt-12 px-8 md:px-16" id="ai-narrative-section">
+    <div class="border border-surface-variant/50 bg-surface-container-low p-8 md:p-10 relative overflow-hidden group">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full blur-2xl group-hover:bg-primary/10 transition-colors duration-1000"></div>
+        <div class="absolute right-4 top-4">
+            <span class="font-label text-[10px] tracking-[0.3em] font-bold text-primary uppercase border border-primary/30 px-3 py-1 flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                AI GENERATED
+            </span>
+        </div>
+        
+        <h2 class="font-headline font-bold text-lg uppercase tracking-widest text-on-surface mb-2">Pesan Dari Kurator</h2>
+        <span class="font-label text-[10px] tracking-widest text-on-surface-variant uppercase block mb-6">Status Log: {{ date('d.m.y / H:i') }}</span>
+        
+        <div id="narrative-content" class="min-h-[80px]">
+            <!-- Skeleton Loader -->
+            <div class="animate-pulse flex flex-col gap-3 max-w-4xl">
+                <div class="h-4 bg-surface-variant/60 rounded w-full"></div>
+                <div class="h-4 bg-surface-variant/60 rounded w-11/12"></div>
+                <div class="h-4 bg-surface-variant/60 rounded w-4/5"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Spotlight: Currently Reading -->
 <section class="mt-20 px-8 md:px-16">
 <div class="flex items-center gap-4 mb-12">
@@ -183,4 +209,47 @@
 </div>
 </section>
 </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fetchNarrative = async () => {
+            const container = document.getElementById('narrative-content');
+            try {
+                const response = await fetch("{{ route('api.narrative') }}", {
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                if (!response.ok) throw new Error('API Error');
+                
+                const data = await response.json();
+                
+                // Remove skeleton and insert text with type-in effect
+                container.innerHTML = '';
+                const p = document.createElement('p');
+                p.className = 'font-body text-xl text-on-surface leading-relaxed relative z-10';
+                container.appendChild(p);
+                
+                // Simple typewriter effect
+                let i = 0;
+                const text = data.narrative;
+                const speed = 25; // ms per char
+                
+                function typeWriter() {
+                    if (i < text.length) {
+                        p.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, speed);
+                    }
+                }
+                typeWriter();
+
+            } catch (error) {
+                container.innerHTML = '<p class="font-body text-xl text-error leading-relaxed">Koneksi transmisi neural gagal. Silakan periksa kunci A.I. pada matriks sistem (.env).</p>';
+                console.error(error);
+            }
+        };
+
+        fetchNarrative();
+    });
+</script>
 @endsection
