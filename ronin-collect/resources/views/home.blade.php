@@ -12,231 +12,239 @@
 
 <div class="relative z-10 pt-12 pb-24">
     <!-- Hero Section -->
-    <header class="mb-20 px-4 md:px-0" id="hero-section">
-        <div class="flex flex-col md:flex-row justify-between items-end gap-8">
+    <header class="mb-24 px-4 md:px-0" id="hero-section">
+        <div class="flex flex-col md:flex-row justify-between items-end gap-12">
             <div id="hero-text" class="will-change-transform">
-                <p class="font-label text-primary tracking-[0.3em] font-bold text-xs uppercase mb-4 pl-1">Sistem_Arsip_v.01</p>
-                <h1 class="text-7xl md:text-9xl font-black font-headline tracking-tighter leading-[0.9] uppercase text-glow">
+                <p class="font-label text-primary tracking-[0.4em] font-bold text-xs uppercase mb-6 pl-1 drop-shadow-[0_0_8px_rgba(183,16,42,0.8)]">Sistem_Arsip_v.01</p>
+                <h1 class="text-7xl md:text-9xl/[.85] font-black font-headline tracking-tighter uppercase text-glow drop-shadow-2xl">
                     Sang<br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-bright">Kurator</span><br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-bright to-white/80">Kurator</span><br>
                     Ronin.
                 </h1>
-                <p class="mt-8 max-w-xl text-lg text-on-surface-variant font-body leading-relaxed glass rounded-2xl p-6 shadow-2xl">
-                    Suaka digital terkurasi untuk koleksi Shonen berenergi tinggi dan minimalisme Jepang yang disiplin.
+                <p class="mt-10 max-w-xl text-lg md:text-xl text-on-surface-variant font-body leading-relaxed font-medium mix-blend-screen text-white/70">
+                    Suaka digital terkurasi untuk koleksi Shonen berenergi tinggi dan minimalisme Jepang yang disiplin. Tidak ada dinding yang membatasi.
                 </p>
             </div>
             
-            <div class="glass-card p-6 flex flex-col items-end min-w-[240px] text-right reveal-on-scroll">
-                <span class="font-label text-[10px] tracking-widest text-on-surface/50 uppercase mb-2">Status Terminal</span>
-                <span class="font-headline font-black text-2xl text-primary uppercase leading-tight mb-4">Kurator Utama</span>
-                <div class="w-full h-px bg-white/10 my-2"></div>
-                <span class="font-label text-[10px] tracking-widest text-on-surface/40 uppercase">Pembaruan: {{ date('d.m.Y') }}</span>
-                <span class="font-label text-[10px] tracking-widest text-on-surface/40 uppercase mt-1">Arsip Pusat Tokyo</span>
+            <div class="flex flex-col items-end min-w-[240px] text-right reveal-on-scroll">
+                <span class="font-label text-[10px] tracking-[0.3em] text-white/30 uppercase mb-2">Status Terminal</span>
+                <span class="font-headline font-black text-3xl text-primary uppercase leading-tight mb-4 drop-shadow-[0_0_10px_rgba(183,16,42,0.6)]">Kurator Utama</span>
+                <div class="w-24 h-[1px] bg-primary/50 my-3 relative">
+                    <span class="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
+                </div>
+                <span class="font-label text-[10px] tracking-[0.3em] text-white/40 uppercase font-bold">Pembaruan: {{ date('d.m.Y') }}</span>
+                <span class="font-label text-[10px] tracking-[0.3em] text-white/30 uppercase mt-1">Arsip Pusat Tokyo</span>
             </div>
         </div>
     </header>
 
-    <!-- Stats Archival Telemetry -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+    <!-- Stats Archival Telemetry - Frameless -->
+    <div class="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-10"></div>
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20 mb-24 reveal-on-scroll px-4 md:px-0">
         <!-- Value -->
-        <div class="glass-card p-8 group reveal-on-scroll cursor-default">
-            <span class="font-label text-[10px] tracking-[0.2em] text-on-surface/50 uppercase block mb-6 font-bold flex items-center gap-2">
-                <span class="material-symbols-outlined text-sm">payments</span> Nilai Total
+        <div class="group">
+            <span class="font-label text-[10px] tracking-[0.3em] text-white/40 uppercase block mb-6 font-bold flex items-center gap-3">
+                <span class="material-symbols-outlined text-[16px] text-primary drop-shadow-[0_0_5px_rgba(183,16,42,0.8)]">payments</span> Nilai Total
             </span>
-            <div class="text-5xl md:text-6xl font-headline font-black tracking-tighter text-on-surface flex items-start group-hover:scale-105 transition-transform duration-500">
-                <span class="text-primary text-2xl mt-1.5 mr-2 font-bold">Rp</span>
+            <div class="text-5xl md:text-[70px] font-headline font-black tracking-tighter text-white flex items-start group-hover:-translate-y-2 transition-transform duration-500 drop-shadow-lg">
+                <span class="text-primary text-2xl mt-1.5 mr-3 font-bold font-label tracking-widest drop-shadow-[0_0_10px_rgba(183,16,42,0.6)]">Rp</span>
                 {{ number_format($totalInvestment, 0, ',', '.') }}
             </div>
         </div>
 
         <!-- Count -->
-        <div class="glass-card p-8 group relative overflow-hidden reveal-on-scroll cursor-default border-primary/20 glow-red">
-            <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-primary/20 rounded-full blur-2xl group-hover:bg-primary/40 transition-colors duration-700"></div>
-            <div class="relative z-10 flex justify-between items-end h-full">
-                <div>
-                    <span class="font-label text-[10px] tracking-[0.2em] text-primary uppercase block mb-4 font-bold flex items-center gap-2">
-                        <span class="material-symbols-outlined text-sm text-primary">library_books</span> Arsip Terindeks
-                    </span>
-                    <div class="text-7xl font-headline font-black tracking-tighter text-white">{{ $totalOwned }}</div>
-                </div>
-                <div class="text-right pb-1">
-                    <span class="font-label text-[9px] tracking-widest text-on-surface/40 uppercase block mb-2">Penyelesaian</span>
-                    <div class="text-3xl text-on-surface font-headline font-black">{{ $completionRate }}<span class="text-primary text-xl ml-1">%</span></div>
-                </div>
+        <div class="group relative overflow-hidden md:border-l border-white/5 md:pl-12 lg:pl-20 border-dashed">
+            <span class="font-label text-[10px] tracking-[0.3em] text-white/40 uppercase block mb-6 font-bold flex items-center gap-3">
+                <span class="material-symbols-outlined text-[16px] text-white/60">library_books</span> Arsip Terindeks
+            </span>
+            <div class="text-7xl md:text-[100px] font-headline font-black tracking-tighter text-white leading-none text-glow pb-2">{{ $totalOwned }}</div>
+            
+            <div class="flex items-center gap-4 mt-6">
+                <span class="font-label text-[9px] tracking-[0.3em] text-[#8aab8c] uppercase font-bold">Penyelesaian</span>
+                <div class="h-px flex-1 bg-white/10"></div>
+                <div class="text-3xl text-white font-headline font-black">{{ $completionRate }}<span class="text-primary text-xl ml-1">%</span></div>
             </div>
         </div>
 
         <!-- Genres -->
-        <div class="glass-card p-8 reveal-on-scroll">
-            <span class="font-label text-[10px] tracking-[0.2em] text-on-surface/50 uppercase block mb-6 font-bold flex items-center gap-2">
-                <span class="material-symbols-outlined text-sm">category</span> Arc Tema
+        <div class="md:border-l border-white/5 md:pl-12 lg:pl-20 border-dashed group">
+            <span class="font-label text-[10px] tracking-[0.3em] text-white/40 uppercase block mb-8 font-bold flex items-center gap-3">
+                <span class="material-symbols-outlined text-[16px] text-white/60">category</span> Arc Tema Dominan
             </span>
-            <div class="space-y-4">
+            <div class="space-y-6">
                 @forelse($topGenres as $genre)
-                <div class="group/genre">
-                    <div class="flex justify-between items-end mb-1.5">
-                        <span class="font-headline font-bold text-sm uppercase text-on-surface tracking-widest">{{ $genre->name }}</span>
-                        <span class="font-label text-[10px] font-bold text-on-surface/50">{{ $genre->comics_count }} VOL</span>
+                <div class="group/genre cursor-default">
+                    <div class="flex justify-between items-end mb-2">
+                        <span class="font-headline font-bold text-sm uppercase text-white/90 tracking-widest">{{ $genre->name }}</span>
+                        <span class="font-label text-[10px] font-bold text-white/40">{{ $genre->comics_count }} VOL</span>
                     </div>
-                    <!-- Rounded progress -->
-                    <div class="w-full h-[3px] bg-white/5 rounded-full overflow-hidden">
-                        <div class="h-full bg-primary origin-left scale-x-0 group-hover/genre:scale-x-100 transition-transform duration-700 ease-out rounded-full shadow-[0_0_8px_rgba(183,16,42,0.8)]" 
+                    <!-- Minimalist line progress -->
+                    <div class="w-full h-[2px] bg-white/10 overflow-hidden relative">
+                        <div class="absolute top-0 left-0 h-full bg-primary origin-left scale-x-0 group-hover/genre:scale-x-100 transition-transform duration-700 ease-out shadow-[0_0_8px_rgba(183,16,42,0.8)]" 
                              style="width: {{ min(($genre->comics_count / max($totalOwned, 1)) * 100, 100) }}%"></div>
                     </div>
                 </div>
                 @empty
-                <span class="text-xs font-label text-on-surface/50 uppercase font-bold">Belum ada arc dominan.</span>
+                <span class="text-xs font-label text-white/30 uppercase font-bold tracking-[0.2em]">Belum ada arc dominan.</span>
                 @endforelse
             </div>
         </div>
     </section>
+    <div class="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-24"></div>
 
-    <!-- Spotlight Full Bleed -->
+    <!-- Spotlight Full Bleed - Frameless Variant -->
     @if($currentlyReading)
-    <section class="mb-24 reveal-on-scroll">
-        <div class="flex items-center gap-4 mb-8 pl-2">
+    <section class="mb-32 reveal-on-scroll px-4 md:px-0">
+        <div class="flex items-center gap-4 mb-8">
             <div class="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(183,16,42,0.8)]"></div>
-            <h2 class="font-label text-[10px] tracking-[0.3em] uppercase font-bold text-primary">Sedang Diurai</h2>
+            <h2 class="font-label text-[10px] tracking-[0.4em] uppercase font-bold text-primary drop-shadow-[0_0_8px_rgba(183,16,42,0.6)]">Sedang Diurai</h2>
         </div>
         
-        <div class="relative w-full rounded-3xl overflow-hidden glass-card group cursor-pointer" style="min-height: 480px;">
-            <!-- Background Image Parallax -->
-            <div class="absolute inset-0 overflow-hidden">
+        <div class="relative w-full rounded-[40px] overflow-hidden group cursor-pointer" style="min-height: 520px;">
+            <!-- Background Image -->
+            <div class="absolute inset-0 overflow-hidden bg-[#0c1a0e]">
                 <img alt="{{ $currentlyReading->title }}" 
-                     class="w-full h-[120%] object-cover object-top opacity-50 group-hover:scale-105 transition-transform duration-1000 parallax-img"
-                     src="{{ $currentlyReading->cover_image ? asset($currentlyReading->cover_image) : 'https://lh3.googleusercontent.com/aida-public/AB6AXuCZzS7gEQGQo0X2hEMgP46WiWvQJ4_WU1ZzWW8bT4xaCSdtcqg-CwsUW7KMVg_gh1BBaJgRhunVHupVPUgaXyvZ51EyThQGwFA9syhqF6u0EO7dUC1tuGb06Ol1BVwhWgJ7bCEgKLrQzxwDXQr3ajouSs2aGAzY_dseu6OcepiINdx87RYlf6V0V5Rl-YTcbodnTBxDNrCfkM-slkeN1POOecxQKA4FGFvUEjbxNvZRdW1EFn7hUt-K7bVjEOzcW0yglBKJnxPPK-4' }}"/>
+                     class="w-full h-[120%] object-cover object-top opacity-60 group-hover:scale-[1.03] group-hover:opacity-80 transition-all duration-1000 parallax-img select-none origin-center"
+                     src="{{ $currentlyReading->cover_image ? asset($currentlyReading->cover_image) : '' }}"/>
             </div>
-            <!-- Overlay Gradients -->
-            <div class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-[#0c1a0e] via-[#0c1a0e]/80 to-transparent"></div>
-            <div class="absolute inset-y-0 left-0 w-full md:w-2/3 bg-gradient-to-r from-[#0c1a0e] via-[#0c1a0e]/80 to-transparent"></div>
+            
+            <!-- Sleek Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[#020603] via-[#020603]/80 to-transparent opacity-90"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#020603] via-[#020603]/60 to-transparent opacity-80"></div>
             
             <!-- Content -->
-            <div class="absolute inset-0 p-8 md:p-14 flex flex-col justify-end items-start md:w-2/3">
-                <span class="glass px-4 py-1.5 rounded-full font-label text-[9px] tracking-widest uppercase text-white/70 mb-6 flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[12px] text-primary">bookmark</span>
+            <div class="absolute inset-0 p-10 md:p-16 lg:p-24 flex flex-col justify-end items-start md:w-3/4">
+                <span class="border border-white/20 bg-white/5 backdrop-blur px-5 py-2 rounded-full font-label text-[9px] tracking-[0.3em] uppercase text-white/80 mb-8 flex items-center gap-3">
+                    <span class="material-symbols-outlined text-[14px] text-primary">bookmark</span>
                     Fokus Volume
                 </span>
-                <h3 class="text-4xl md:text-7xl font-headline font-black tracking-tighter uppercase mb-4 md:mb-6 leading-tight text-glow group-hover:text-primary-fixed transition-colors">
+                <h3 class="text-5xl md:text-8xl font-headline font-black tracking-tighter uppercase mb-6 leading-[0.9] text-white drop-shadow-2xl group-hover:text-primary-fixed transition-colors text-glow">
                     {{ $currentlyReading->title }}
                 </h3>
-                <p class="text-on-surface/70 text-base md:text-lg mb-8 line-clamp-3 md:line-clamp-none leading-relaxed max-w-xl">
+                <p class="text-white/60 text-lg md:text-xl font-medium mb-10 line-clamp-3 md:line-clamp-none leading-relaxed max-w-2xl mix-blend-screen">
                     {{ $currentlyReading->description ?? 'Menyelami lautan panel dan dialog. Setiap goresan tinta adalah jejak para master.' }}
                 </p>
                 <a href="{{ route('comics.show', $currentlyReading) }}" 
-                   class="bg-primary/20 border border-primary/50 text-white px-8 py-4 rounded-full font-label text-[10px] tracking-[0.2em] font-bold uppercase hover:bg-primary hover:shadow-[0_0_30px_rgba(183,16,42,0.5)] transition-all backdrop-blur-md">
-                    Lanjutkan Membaca
+                   class="relative inline-flex group/btn overflow-hidden items-center justify-center border border-white/30 text-white px-10 py-5 rounded-full font-label text-[10px] tracking-[0.3em] font-bold uppercase transition-all">
+                    <span class="absolute inset-0 w-full h-full bg-primary -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-500 ease-in-out"></span>
+                    <span class="relative z-10 flex items-center gap-3">Lanjutkan Membaca <span class="material-symbols-outlined text-[14px] transition-transform group-hover/btn:translate-x-2">arrow_forward</span></span>
                 </a>
             </div>
-            
             <!-- Watermark -->
-            <div class="absolute right-8 top-1/2 -translate-y-1/2 vertical-text select-none pointer-events-none opacity-[0.03]">
-                <span class="text-[150px] font-black font-headline tracking-tighter">SAMURAI</span>
+            <div class="absolute right-10 top-1/2 -translate-y-1/2 vertical-text select-none pointer-events-none opacity-[0.02]">
+                <span class="text-[200px] font-black font-headline tracking-tighter">SAMURAI</span>
             </div>
         </div>
     </section>
     @endif
 
-    <!-- AI Report -->
-    <section class="mb-24 reveal-on-scroll">
-        <div class="glass-card relative overflow-hidden group">
-            <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent z-0"></div>
-            <div class="relative z-10 p-8 md:p-12">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-8 border-b border-white/5 pb-6">
-                    <div>
-                        <h2 class="font-headline font-bold text-2xl uppercase tracking-widest text-on-surface mb-2">Intelijen Kurator</h2>
-                        <span class="font-label text-[10px] tracking-[0.2em] text-on-surface/40 uppercase">A.I. Log / {{ date('d.m.y') }}</span>
-                    </div>
-                    <span class="glass px-3 py-1 bg-primary/10 rounded-full font-label text-[9px] tracking-[0.2em] font-bold text-primary flex items-center gap-2 self-start">
-                        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-[pulse-orb_2s_infinite]"></span>
-                        SYSTEM ACTIVE
-                    </span>
+    <!-- AI Report - Frameless -->
+    <section class="mb-32 reveal-on-scroll px-4 md:px-0">
+        <div class="relative group max-w-5xl">
+            <!-- Organic decorative element behind text -->
+            <div class="absolute -left-10 top-10 w-[300px] h-[300px] bg-primary/10 rounded-full blur-[100px] pointer-events-none mix-blend-screen opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 border-b border-white/10 pb-6">
+                <div>
+                    <h2 class="font-headline font-black text-4xl uppercase tracking-tighter text-white mb-2 group-hover:text-glow transition-colors">Intelijen Kurator</h2>
+                    <span class="font-label text-[10px] tracking-[0.4em] text-[#8aab8c] uppercase font-bold">A.I. Log / {{ date('d.m.y') }}</span>
                 </div>
-                <div id="narrative-content" class="min-h-[100px]">
-                    <div class="animate-pulse space-y-4 max-w-4xl">
-                        <div class="h-3 bg-white/10 rounded-full w-full"></div>
-                        <div class="h-3 bg-white/10 rounded-full w-11/12"></div>
-                        <div class="h-3 bg-white/10 rounded-full w-4/5"></div>
-                    </div>
+                <span class="border border-primary/30 px-4 py-1.5 rounded-full font-label text-[9px] tracking-[0.3em] font-bold text-primary flex items-center gap-2 self-start shadow-[0_0_15px_rgba(183,16,42,0.3)]">
+                    <span class="w-1.5 h-1.5 rounded-full bg-primary animate-[pulse-orb_2s_infinite]"></span>
+                    SYSTEM ACTIVE
+                </span>
+            </div>
+            
+            <div id="narrative-content" class="min-h-[120px] pl-0 md:pl-8 md:border-l border-primary/20 transition-all duration-700">
+                <div class="animate-pulse space-y-4 max-w-4xl opacity-50">
+                    <div class="h-2 bg-white/20 rounded-full w-full"></div>
+                    <div class="h-2 bg-white/20 rounded-full w-10/12"></div>
+                    <div class="h-2 bg-white/20 rounded-full w-8/12"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Bento Grid Collections -->
-    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 reveal-on-scroll">
-        <!-- Acq -->
+    <!-- Bento Grid Collections - Frameless Concept -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-16 reveal-on-scroll px-4 md:px-0">
+        
+        <!-- Ekstraksi Terbaru (Latest Acq) -->
         <div class="lg:col-span-8">
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 mb-8 pl-2">
-                <h2 class="font-headline font-black text-3xl uppercase tracking-tighter text-glow">Ekstraksi_Terbaru</h2>
-                <a href="{{ route('comics.index') }}" class="glass px-4 py-1.5 rounded-full font-label text-[10px] tracking-widest text-primary font-bold hover:text-white hover:bg-primary/20 hover:border-primary/50 transition-colors">LIHAT SEMUA</a>
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-12">
+                <h2 class="font-headline font-black text-4xl uppercase tracking-tighter text-white drop-shadow-lg">Ekstraksi Terbaru</h2>
+                <a href="{{ route('comics.index') }}" class="font-label text-[10px] tracking-[0.3em] text-primary font-bold hover:text-white transition-colors flex items-center gap-2 underline underline-offset-8 decoration-primary/30 hover:decoration-white">
+                    LIHAT SEMUA INDEKS <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+                </a>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 perspective-1000">
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12 perspective-1000">
                 @forelse($latestAcquisitions as $index => $comic)
-                <a href="{{ route('comics.show', $comic) }}" class="block tilt-card w-full h-full animate-fade-up" style="animation-delay: {{ ($index+1)*100 }}ms">
-                    <div class="glass-card overflow-hidden h-full flex flex-col card-tilt-target relative group hover:border-primary/40">
-                        <!-- Cover Area -->
-                        <div class="relative w-full h-64 overflow-hidden rounded-t-2xl bg-[#0a160c]">
-                            <img alt="{{ $comic->title }}" 
-                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
-                                 src="{{ $comic->cover_image ? asset($comic->cover_image) : '' }}"/>
-                            <div class="absolute inset-0 bg-gradient-to-t from-[#0a160c] via-[#0a160c]/40 to-transparent"></div>
-                            
-                            <!-- priority pill -->
-                            @if(strtolower($comic->priority ?? '') == 'extreme')
-                            <div class="absolute top-4 right-4 glass px-2 py-1 bg-black/50 rounded-full text-[8px] font-label font-bold text-primary tracking-widest uppercase flex items-center gap-1 shadow-[0_0_10px_rgba(183,16,42,0.8)] border-primary/30">
-                                <span class="material-symbols-outlined text-[10px]">whatshot</span>
-                            </div>
-                            @endif
-                        </div>
+                <a href="{{ route('comics.show', $comic) }}" class="block tilt-card w-full animate-fade-up group" style="animation-delay: {{ ($index+1)*100 }}ms">
+                    <!-- Image bounds -->
+                    <div class="card-tilt-target relative overflow-hidden rounded-[24px] bg-[#0a160c] mb-6 shadow-2xl transition-all duration-500 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-white/5 group-hover:border-primary/40" style="aspect-ratio: 2/3;">
+                        <img alt="{{ $comic->title }}" 
+                             class="absolute inset-0 w-full h-[110%] object-cover object-center transition-all duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                             src="{{ $comic->cover_image ? asset($comic->cover_image) : '' }}"/>
                         
-                        <!-- Info Area -->
-                        <div class="p-6 flex-1 flex flex-col z-10 -mt-10 pt-0">
-                            <span class="font-label text-[9px] tracking-[0.2em] text-primary uppercase font-bold mb-3 drop-shadow-md">
-                                {{ $comic->created_at->diffForHumans() }}
-                            </span>
-                            <h4 class="font-headline font-bold text-lg leading-tight uppercase tracking-tight text-white mb-3 line-clamp-2 drop-shadow-md group-hover:text-primary-fixed transition-colors">{{ $comic->title }}</h4>
-                            <p class="font-label text-[10px] tracking-widest text-on-surface/40 uppercase mt-auto truncate">{{ $comic->author }}</p>
+                        <!-- Priority Pill Hover -->
+                        @if(strtolower($comic->priority ?? '') == 'extreme')
+                        <div class="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-2.5 py-1.5 rounded-full text-[10px] font-label font-bold text-primary tracking-widest uppercase flex items-center gap-1 shadow-[0_0_15px_rgba(183,16,42,0.8)] border border-primary/30 z-10">
+                            <span class="material-symbols-outlined text-[14px]">whatshot</span>
                         </div>
+                        @endif
+
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#020603]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    
+                    <!-- Metadata block below image -->
+                    <div class="flex flex-col z-10 pl-2 border-l border-white/10 group-hover:border-primary/50 transition-colors">
+                        <span class="font-label text-[9px] tracking-[0.3em] text-primary uppercase font-bold mb-2 flex items-center gap-2">
+                            <span class="w-1 h-1 rounded-full bg-primary/70"></span> {{ $comic->created_at->diffForHumans() }}
+                        </span>
+                        <h4 class="font-headline font-bold text-lg md:text-xl leading-tight uppercase tracking-tight text-white mb-2 line-clamp-2 drop-shadow-md group-hover:text-primary-fixed transition-colors">{{ $comic->title }}</h4>
+                        <p class="font-label text-[10px] tracking-[0.2em] text-white/40 uppercase truncate font-medium">{{ $comic->author }}</p>
                     </div>
                 </a>
                 @empty
-                <div class="col-span-3 text-center py-12 text-on-surface/30 uppercase tracking-[0.2em] font-label font-bold text-[10px] glass-card border-dashed">
-                    Tidak ada anomali terdeteksi.
+                <div class="col-span-3 text-center py-16 text-white/30 uppercase tracking-[0.3em] font-label font-bold text-[10px] border border-dashed border-white/10 rounded-3xl w-full">
+                    Sistem tidak mendeteksi anomali.
                 </div>
                 @endforelse
             </div>
         </div>
 
-        <!-- Wishlist Sidebar -->
+        <!-- Wishlist Sidebar Frameless -->
         <div class="lg:col-span-4 flex flex-col h-full">
-            <div class="flex items-center gap-3 mb-8 pl-2">
-                <span class="material-symbols-outlined text-on-surface/50 text-2xl">bookmark_add</span>
-                <h2 class="font-headline font-black text-2xl uppercase tracking-tighter">Antrean</h2>
+            <div class="flex items-center gap-3 mb-10 pl-2">
+                <span class="material-symbols-outlined text-primary text-2xl drop-shadow-[0_0_8px_rgba(183,16,42,0.6)]">bookmark_add</span>
+                <h2 class="font-headline font-black text-3xl uppercase tracking-tighter text-white">Antrean Log</h2>
             </div>
             
-            <div class="glass-card p-6 flex-1 flex flex-col relative overflow-hidden">
-                <div class="absolute -right-8 top-20 text-[120px] text-white/[0.02] font-black material-symbols-outlined pointer-events-none rotate-12">receipt_long</div>
-                <div class="space-y-4 flex-1 relative z-10 overflow-auto pr-2 custom-scroll max-h-[400px] lg:max-h-none">
+            <div class="flex-1 flex flex-col pl-2 border-l border-white/10 relative">
+                <!-- Watermark -->
+                <div class="absolute right-0 top-1/2 -translate-y-1/2 text-[100px] text-white/[0.015] font-black font-headline pointer-events-none rotate-90 origin-right">WHISH</div>
+                
+                <div class="space-y-6 flex-1 relative z-10 overflow-auto pr-2 custom-scroll max-h-[500px] lg:max-h-none">
                     @forelse($wishlist as $wish)
-                    <div class="group flex gap-4 items-center p-3 rounded-xl hover:bg-white/5 transition-colors cursor-pointer w-full border border-transparent hover:border-white/5">
-                        <div class="w-14 h-20 rounded-lg overflow-hidden bg-white/5 border border-white/10 flex-shrink-0">
-                            <img src="{{ $wish->cover_image ? asset($wish->cover_image) : '' }}" class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity group-hover:scale-110 duration-500"/>
+                    <div class="group flex gap-5 items-center cursor-pointer w-full">
+                        <div class="w-16 h-24 rounded-xl overflow-hidden bg-white/5 border border-transparent group-hover:border-primary/30 flex-shrink-0 transition-all shadow-lg group-hover:shadow-[0_10px_20px_rgba(183,16,42,0.15)] relative">
+                            <img src="{{ $wish->cover_image ? asset($wish->cover_image) : '' }}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 group-hover:scale-110"/>
                         </div>
-                        <div class="flex-1 min-w-0">
-                            <h5 class="font-headline font-bold text-sm uppercase group-hover:text-primary-fixed transition-colors truncate text-white/90 mb-1 leading-tight">{{ $wish->title }}</h5>
-                            <div class="flex items-center justify-between mt-3">
-                                <span class="glass px-2 rounded font-label text-[8px] tracking-[0.2em] text-on-surface/50 uppercase border-none bg-white/5">PRIORITAS: {{ $wish->priority }}</span>
-                                <span class="font-label text-[10px] font-bold text-primary tracking-widest drop-shadow-[0_0_8px_rgba(183,16,42,0.3)]">{{ $wish->price ? 'Rp'.number_format($wish->price,0,',','.') : 'H?RGA' }}</span>
+                        <div class="flex-1 min-w-0 flex flex-col pt-1">
+                            <h5 class="font-headline font-bold text-sm md:text-base uppercase group-hover:text-primary-fixed transition-colors truncate text-white mb-2 leading-tight drop-shadow-md">{{ $wish->title }}</h5>
+                            <div class="mt-auto flex items-center justify-between">
+                                <span class="font-label text-[9px] tracking-[0.3em] font-bold text-primary flex items-center gap-1.5"><span class="w-1 h-3 bg-primary rounded-full"></span> P{{ $wish->priority }}</span>
+                                <span class="font-label text-[10px] font-bold text-white/50 tracking-widest group-hover:text-white transition-colors">{{ $wish->price ? 'Rp'.number_format($wish->price,0,',','.') : 'H?RGA' }}</span>
                             </div>
                         </div>
                     </div>
                     @empty
-                        <div class="text-center py-12 text-on-surface/30 font-label text-[10px] tracking-[0.2em] uppercase">Antrean Kosong</div>
+                        <div class="text-center py-12 text-white/30 font-label text-[10px] tracking-[0.3em] uppercase font-bold">Antrean Kosong</div>
                     @endforelse
                 </div>
                 
-                <a href="{{ route('comics.create') }}" class="w-full mt-6 glass bg-white/5 py-4 rounded-xl font-label text-[10px] tracking-[0.3em] font-bold text-center uppercase hover:bg-primary hover:text-white transition-all hover:border-primary/50 relative z-10 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                    Incaran Baru
+                <a href="{{ route('comics.create') }}" class="w-full mt-10 border border-white/20 py-4 rounded-full font-label text-[10px] tracking-[0.4em] font-bold text-center uppercase hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 relative z-10 flex items-center justify-center gap-3 group">
+                    Incaran Baru <span class="material-symbols-outlined text-[14px] group-hover:translate-x-1 transition-transform">east</span>
                 </a>
             </div>
         </div>
@@ -247,9 +255,9 @@
 
 @section('extra_css')
 <style>
-    .perspective-1000 { perspective: 1000px; }
-    .custom-scroll::-webkit-scrollbar { width: 4px; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 99px; }
+    .perspective-1000 { perspective: 1200px; transform-style: preserve-3d; }
+    .custom-scroll::-webkit-scrollbar { width: 3px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
 </style>
 @endsection
 
@@ -264,8 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            const xPct = (x / rect.width - 0.5) * 20; 
-            const yPct = (y / rect.height - 0.5) * -20;
+            const xPct = (x / rect.width - 0.5) * 15; 
+            const yPct = (y / rect.height - 0.5) * -15;
             target.style.transform = `rotateY(${xPct}deg) rotateX(${yPct}deg) scale3d(1.02, 1.02, 1.02)`;
         });
         card.addEventListener('mouseleave', () => {
@@ -294,19 +302,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Hero text subtle move
                 if(heroText && scrolled < 800) {
-                    heroText.style.transform = `translateY(${scrolled * 0.15}px)`;
-                    heroText.style.opacity = 1 - (scrolled * 0.002);
+                    heroText.style.transform = `translateY(${scrolled * 0.25}px)`;
+                    heroText.style.opacity = 1 - (scrolled * 0.0015);
                 }
                 
-                // Image parallax inside cards
+                // Image parallax inside wrappers
                 if(parallaxImgs.length) {
                     parallaxImgs.forEach(img => {
-                        const card = img.closest('.glass-card');
-                        if (card) {
-                            const rect = card.getBoundingClientRect();
+                        const wrapper = img.parentElement;
+                        if (wrapper) {
+                            const rect = wrapper.getBoundingClientRect();
                             if(rect.top < window.innerHeight && rect.bottom > 0) {
-                                const yOffset = (rect.top - window.innerHeight/2) * -0.15;
-                                img.style.transform = `translateY(${yOffset}px)`;
+                                const yOffset = (rect.top - window.innerHeight/2) * -0.2;
+                                img.style.transform = `translateY(${yOffset}px) scale(1.03)`;
                             }
                         }
                     });
@@ -328,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             container.innerHTML = '';
             const p = document.createElement('p');
-            p.className = 'font-body text-xl md:text-2xl text-on-surface leading-relaxed text-glow font-medium';
+            p.className = 'font-body text-xl md:text-2xl text-white/90 leading-relaxed font-medium drop-shadow-md';
             container.appendChild(p);
             
             let i = 0;
