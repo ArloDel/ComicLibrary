@@ -6,6 +6,7 @@ use App\Http\Controllers\ComicController;
 use App\Http\Controllers\VolumeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ApiProxyController;
+use App\Http\Controllers\MarketController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [ComicController::class, 'dashboard'])->name('dashboard');
     Route::resource('comics', ComicController::class);
     Route::resource('volumes', VolumeController::class)->except(['index', 'show']);
+    Route::get('/pasar', [MarketController::class, 'index'])->name('market.index');
 
     // API Proxy routes (server-side calls to avoid CORS)
     Route::get('/api-proxy/narrative',   [ComicController::class, 'narrativeReport'])->name('api.narrative');

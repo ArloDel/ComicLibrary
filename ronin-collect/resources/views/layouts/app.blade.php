@@ -214,7 +214,10 @@
          class="{{ request()->routeIs('comics.index') || request()->routeIs('comics.show') ? 'nav-pill-active' : 'text-on-surface/50 hover:text-on-surface px-3.5 py-1.5 rounded-full hover:bg-white/5' }} transition-all duration-200">
         Perpustakaan
       </a>
-      <span class="text-on-surface/20 px-3.5 py-1.5 rounded-full cursor-not-allowed">Pasar</span>
+      <a href="{{ route('market.index') }}"
+         class="{{ request()->routeIs('market.index') ? 'nav-pill-active' : 'text-on-surface/50 hover:text-on-surface px-3.5 py-1.5 rounded-full hover:bg-white/5' }} transition-all duration-200">
+        Pasar
+      </a>
     </div>
   </div>
 
