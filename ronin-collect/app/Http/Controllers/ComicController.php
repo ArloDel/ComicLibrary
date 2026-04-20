@@ -65,13 +65,40 @@ class ComicController extends Controller
     {
         $query = Comic::withCount('volumes')->with('tags');
 
-        if ($request->has('tag')) {
-            $query->whereHas('tags', fn ($q) => $q->where('name', $request->tag));
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('author', 'like', "%{$search}%");
+            });
         }
 
-        $comics = $query->orderBy('title')->get();
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
 
-        return view('comics.index', compact('comics'));
+        if ($request->filled('author')) {
+            $query->where('author', $request->input('author'));
+        }
+
+        if ($request->filled('tag')) {
+            $query->whereHas('tags', fn ($q) => $q->where('name', $request->input('tag')));
+        }
+        
+        $sort = $request->input('sort', 'title_asc');
+        switch ($sort) {
+            case 'newest': $query->orderBy('created_at', 'desc'); break;
+            case 'oldest': $query->orderBy('created_at', 'asc'); break;
+            case 'title_desc': $query->orderBy('title', 'desc'); break;
+            default: $query->orderBy('title', 'asc'); break; // title_asc
+        }
+
+        $comics = $query->get();
+
+        $allTags = Tag::orderBy('name')->pluck('name');
+        $allAuthors = Comic::select('author')->distinct()->orderBy('author')->pluck('author');
+
+        return view('comics.index', compact('comics', 'allTags', 'allAuthors'));
     }
 
     public function create()
