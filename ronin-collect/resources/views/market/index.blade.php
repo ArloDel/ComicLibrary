@@ -24,13 +24,20 @@
             Radar Ekstraksi
         </h1>
         <p class="font-body text-white/50 text-base md:text-lg max-w-xl font-medium tracking-wide">
-            Transmisi intersep dari jaringan gelap. Mengawasi {{ $bounties->count() }} target buruan yang terfragmentasi.
+            Transmisi intersep dari jaringan gelap. Mengawasi <span id="bounty-counter" class="text-primary">{{ $bounties->count() }}</span> target buruan yang terfragmentasi.
         </p>
     </div>
     
-    <div class="text-right border-r border-primary/50 pr-6 py-2">
-        <span class="font-label text-[10px] tracking-[0.3em] text-[#8aab8c] uppercase font-bold block mb-1">Status Enkripsi</span>
-        <span class="font-label text-sm tracking-widest text-white uppercase font-bold">Terhubung <span class="text-primary">•</span></span>
+    <div class="flex items-center gap-6">
+        <button onclick="toggleFilterDrawer()" class="glass px-6 py-2.5 rounded-full font-label text-[10px] tracking-[0.3em] uppercase text-white hover:text-primary transition-all flex items-center gap-3 group border border-white/10 hover:border-primary/50 hover:bg-primary/5 shadow-2xl">
+            <span class="material-symbols-outlined text-[14px] group-hover:rotate-180 transition-transform duration-500">tune</span>
+            Kalibrasi Filter
+        </button>
+
+        <div class="text-right border-l border-primary/50 pl-6 py-2">
+            <span class="font-label text-[10px] tracking-[0.3em] text-[#8aab8c] uppercase font-bold block mb-1">Status Enkripsi</span>
+            <span class="font-label text-sm tracking-widest text-white uppercase font-bold">Terhubung <span class="text-primary animate-pulse">•</span></span>
+        </div>
     </div>
 </header>
 <div class="w-full h-px bg-gradient-to-r from-primary/30 to-transparent mb-12 hidden md:block"></div>
@@ -39,7 +46,7 @@
 <section class="relative z-10 px-4 md:px-0 min-h-[50vh]">
     <div class="grid grid-cols-1 gap-12 lg:gap-16">
         @forelse($bounties as $index => $bounty)
-            <div class="group flex flex-col md:flex-row gap-8 items-start animate-fade-up relative w-full" style="animation-delay: {{ min($index*100, 800) }}ms;">
+            <div class="bounty-card group flex flex-col md:flex-row gap-8 items-start animate-fade-up relative w-full" data-priority="{{ strtolower($bounty->priority) }}" data-price="{{ $bounty->price ?? 0 }}" style="animation-delay: {{ min($index*100, 800) }}ms;">
                 
                 <!-- Number / Radar Blip Indicator -->
                 <div class="hidden md:flex flex-col items-center pt-8 pr-4">
@@ -47,10 +54,17 @@
                     <div class="h-24 w-[1px] bg-gradient-to-b from-white/10 to-transparent my-2"></div>
                 </div>
 
-                <!-- Cover Frameless -->
+                <!-- Cover Frameless dengan Skeleton Loading -->
                 <a href="{{ route('comics.show', $bounty) }}" class="relative overflow-hidden rounded-[24px] bg-[#080f0a] shadow-xl drop-shadow-2xl flex-shrink-0 border border-primary/10 group-hover:border-primary/40 transition-colors w-40 md:w-56" style="aspect-ratio: 2/3;">
-                    <img src="{{ $bounty->cover_image ? asset($bounty->cover_image) : '' }}" class="absolute inset-0 w-full h-[105%] object-cover object-top opacity-60 group-hover:scale-110 group-hover:opacity-100 transition-all duration-700 mix-blend-screen"/>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 z-0"></div>
+                    
+                    <!-- Pulse Skeleton -->
+                    <div class="absolute inset-0 bg-primary/10 animate-pulse skeleton-layer z-0 flex items-center justify-center border border-white/5">
+                        <span class="material-symbols-outlined text-primary/30 text-4xl animate-[ping_3s_infinite]">radar</span>
+                    </div>
+
+                    <img src="{{ $bounty->cover_image ? asset($bounty->cover_image) : '' }}" class="absolute inset-0 w-full h-[105%] object-cover object-top opacity-60 group-hover:scale-110 group-hover:opacity-100 transition-all duration-700 mix-blend-screen z-10" onload="this.previousElementSibling.style.display='none'"/>
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 z-20 pointer-events-none"></div>
                     
                     @if(strtolower($bounty->priority) == 'extreme')
                          <div class="absolute inset-0 border-[2px] border-primary/20 rounded-[24px] pointer-events-none group-hover:border-primary/50 transition-colors"></div>
@@ -131,9 +145,69 @@
     </div>
 </section>
 
+<!-- Filter Drawer & Overlay -->
+<div id="drawer-overlay" onclick="toggleFilterDrawer()" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 hidden transition-opacity opacity-0 duration-500"></div>
+
+<div id="filter-drawer" class="fixed top-0 right-0 h-screen w-80 lg:w-[400px] glass z-50 transform translate-x-full border-l border-white/10 transition-transform duration-[600ms] cubic-bezier(0.23,1,0.32,1) p-8 lg:p-12 flex flex-col shadow-[-20px_0_60px_rgba(0,0,0,0.8)]">
+    
+    <div class="flex justify-between items-center mb-12">
+        <h3 class="font-headline font-black text-2xl uppercase tracking-tighter text-white flex items-center gap-3 text-glow">
+            <span class="material-symbols-outlined text-[20px] text-primary">tune</span> Kalibrasi
+        </h3>
+        <button onclick="toggleFilterDrawer()" class="text-white/30 hover:text-primary transition-colors flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/5">
+            <span class="material-symbols-outlined text-[24px]">close</span>
+        </button>
+    </div>
+
+    <div class="space-y-12 flex-1 overflow-y-auto pr-4 custom-scrollbar">
+        <!-- Prioritas Filter -->
+        <div>
+            <h4 class="font-label text-[10px] tracking-[0.4em] uppercase text-white/40 mb-6 font-bold flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-primary rounded-full"></span> Sortir Prioritas
+            </h4>
+            <div class="flex flex-col gap-4">
+                @foreach([
+                    ['val' => 'extreme', 'color' => 'text-primary'],
+                    ['val' => 'high', 'color' => 'text-orange-400'],
+                    ['val' => 'medium', 'color' => 'text-yellow-400'],
+                    ['val' => 'low', 'color' => 'text-blue-400']
+                ] as $p)
+                <label class="flex items-center gap-4 cursor-pointer group p-3 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 transition-all">
+                    <div class="relative flex items-center justify-center">
+                        <input type="checkbox" value="{{ $p['val'] }}" checked class="filter-priority peer w-5 h-5 bg-[#0a160c] border border-white/20 rounded shadow-sm focus:ring-opacity-0 focus:ring-offset-0 text-transparent transition-all cursor-pointer"/>
+                        <span class="material-symbols-outlined absolute text-[14px] {{ $p['color'] }} pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity drop-shadow-md">check</span>
+                    </div>
+                    <span class="font-label text-xs tracking-widest uppercase text-white/60 group-hover:text-white transition-colors flex-1">{{ $p['val'] }}</span>
+                </label>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Rentang Harga -->
+        <div>
+            <h4 class="font-label text-[10px] tracking-[0.4em] uppercase text-white/40 mb-6 font-bold flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-primary rounded-full"></span> Ambang Batas Akuisisi
+            </h4>
+            <div class="space-y-6">
+                <!-- Glowing range slider -->
+                <div class="relative w-full h-1.5 bg-white/10 rounded-full overflow-hidden group">
+                    <input type="range" id="price-slider" min="0" max="600000" step="25000" value="600000" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20 hover:opacity-10 transition-opacity" style="accent-color: var(--primary);"/>
+                    <!-- Track filler custom -->
+                    <div id="price-track" class="absolute left-0 top-0 h-full bg-primary z-10 transition-all duration-75 shadow-[0_0_10px_#b7102a]"></div>
+                </div>
+                
+                <div class="flex justify-between items-baseline border border-white/10 glass rounded-xl px-4 py-3">
+                    <span class="font-label text-[10px] tracking-widest text-white/40 uppercase font-bold">Maksimal:</span>
+                    <span id="price-display" class="font-headline font-bold text-lg text-white">Tak Terbatas</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Elegant ambient background panning
+    // Parallax logic
     const bgs = document.querySelectorAll('.bg-parallax');
     window.addEventListener('scroll', () => {
         requestAnimationFrame(() => {
@@ -141,7 +215,89 @@ document.addEventListener('DOMContentLoaded', () => {
             bgs.forEach(bg => { bg.style.transform = `translateY(${sy * 0.15}px)`; });
         });
     }, {passive:true});
+
+    // Filtering Logic
+    const priorityCheckboxes = document.querySelectorAll('.filter-priority');
+    const priceSlider = document.getElementById('price-slider');
+    const priceTrack = document.getElementById('price-track');
+    const priceDisplay = document.getElementById('price-display');
+    const cards = document.querySelectorAll('.bounty-card');
+    const counter = document.getElementById('bounty-counter');
+
+    function updateSliderUI(val) {
+        const percentage = (val / parseInt(priceSlider.max)) * 100;
+        priceTrack.style.width = percentage + '%';
+        if (val >= parseInt(priceSlider.max)) {
+            priceDisplay.innerText = 'Tak Terbatas';
+        } else {
+            priceDisplay.innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val);
+        }
+    }
+
+    function applyFilters() {
+        const activePriorities = Array.from(priorityCheckboxes)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+        const maxPrice = parseInt(priceSlider.value);
+        
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+            const p = card.getAttribute('data-priority');
+            const price = parseInt(card.getAttribute('data-price')) || 0;
+
+            const matchPriority = activePriorities.includes(p) || p === ''; 
+            const matchPrice = price <= maxPrice || maxPrice >= parseInt(priceSlider.max); 
+
+            if (matchPriority && matchPrice) {
+                card.style.display = 'flex';
+                // Trigger re-animation
+                card.style.animation = 'none';
+                card.offsetHeight; // reflow
+                card.style.animation = 'fade-up 0.5s ease forwards';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // Update Tracker counter UI
+        if(counter) {
+            counter.innerText = visibleCount;
+            // pulse animation
+            counter.parentElement.classList.remove('animate-fade-in');
+            void counter.parentElement.offsetWidth; 
+            counter.parentElement.classList.add('animate-fade-in');
+        }
+    }
+
+    // Init state
+    updateSliderUI(priceSlider.value);
+
+    // Bind events
+    priorityCheckboxes.forEach(cb => cb.addEventListener('change', applyFilters));
+    priceSlider.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value);
+        updateSliderUI(val);
+        applyFilters();
+    });
 });
+
+// Drawer Toggler exposed to window
+window.toggleFilterDrawer = function() {
+    const drawer = document.getElementById('filter-drawer');
+    const overlay = document.getElementById('drawer-overlay');
+    
+    if (drawer.classList.contains('translate-x-full')) {
+        drawer.classList.remove('translate-x-full');
+        overlay.classList.remove('hidden');
+        requestAnimationFrame(() => overlay.classList.remove('opacity-0'));
+    } else {
+        drawer.classList.add('translate-x-full');
+        overlay.classList.add('opacity-0');
+        setTimeout(() => overlay.classList.add('hidden'), 500);
+    }
+}
 </script>
 
 @endsection
