@@ -18,16 +18,9 @@ class VolumeController extends Controller
         return view('volumes.create', compact('comics'));
     }
 
-    public function store(Request $request)
+    public function store(\App\Http\Requests\StoreVolumeRequest $request)
     {
-        $validated = $request->validate([
-            'comic_id'         => 'required|exists:comics,id',
-            'volume_start'     => 'required|integer|min:1',
-            'volume_end'       => 'nullable|integer|gte:volume_start',
-            'cover_image'      => 'nullable|image|max:2048',
-            'acquisition_date' => 'nullable|date',
-            'is_owned'         => 'boolean',
-        ]);
+        $validated = $request->validated();
 
         // Upload satu file cover yang akan dipakai bersama oleh semua volume dalam range.
         $coverImagePath = $this->uploadCoverFile($request, 'vol');
@@ -44,6 +37,8 @@ class VolumeController extends Controller
             ]);
         }
 
+        \App\Jobs\UpdateNarrativeReport::dispatch();
+
         return redirect()
             ->route('comics.show', $validated['comic_id'])
             ->with('success', 'Volumes added successfully!');
@@ -56,32 +51,28 @@ class VolumeController extends Controller
         return view('volumes.edit', compact('volume', 'comics'));
     }
 
-    public function update(Request $request, Volume $volume)
+    public function update(\App\Http\Requests\UpdateVolumeRequest $request, Volume $volume)
     {
-        $validated = $request->validate([
-            'comic_id'         => 'required|exists:comics,id',
-            'volume_number'    => 'required|string',
-            'cover_image'      => 'nullable|image|max:2048',
-            'cover_image_url'  => 'nullable|url',
-            'acquisition_date' => 'nullable|date',
-            'is_owned'         => 'boolean',
-        ]);
+        $validated = $request->validated();
+
+        $dispatchCoverUrl = null;
 
         if ($request->hasFile('cover_image')) {
             $validated['cover_image'] = $this->uploadCoverFile($request, 'vol');
-        } elseif ($request->filled('cover_image_url')) {
-            try {
-                $validated['cover_image'] = $this->downloadCoverFromUrlStrict(
-                    $request->input('cover_image_url')
-                );
-            } catch (\RuntimeException $e) {
-                return back()->withInput()->withErrors(['cover_image_url' => $e->getMessage()]);
-            }
+        } elseif (!empty($validated['cover_image_url'])) {
+            $validated['cover_image'] = $validated['cover_image_url'];
+            $dispatchCoverUrl = $validated['cover_image_url'];
         }
 
         unset($validated['cover_image_url']);
 
         $volume->update($validated);
+
+        if ($dispatchCoverUrl) {
+            \App\Jobs\DownloadCoverImage::dispatch($volume, $dispatchCoverUrl);
+        }
+
+        \App\Jobs\UpdateNarrativeReport::dispatch();
 
         return redirect()
             ->route('comics.show', $validated['comic_id'])
@@ -92,6 +83,8 @@ class VolumeController extends Controller
     {
         $comicId = $volume->comic_id;
         $volume->delete();
+
+        \App\Jobs\UpdateNarrativeReport::dispatch();
 
         return redirect()->route('comics.show', $comicId);
     }

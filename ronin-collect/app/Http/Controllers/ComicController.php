@@ -38,20 +38,11 @@ class ComicController extends Controller
         ));
     }
 
-    public function narrativeReport(\App\Services\OpenAIService $openAIService)
+    public function narrativeReport()
     {
-        // Get high level stats
-        $latest = Comic::orderBy('created_at', 'desc')->first();
-        $topGenre = Tag::withCount('comics')->orderBy('comics_count', 'desc')->first();
-        
-        [$totalOwned, $totalInvestment] = $this->computeStats();
-
-        // Use the service to generate text
-        $narrative = $openAIService->generateCollectionNarrative(
-            $totalOwned,
-            $totalInvestment,
-            $topGenre?->name,
-            $latest?->title
+        $narrative = \Illuminate\Support\Facades\Cache::get(
+            'dashboard_narrative', 
+            'Analisis kurasi memori sedang didekripsi di latar belakang. Silakan segarkan beberapa saat lagi.'
         );
 
         return response()->json(['narrative' => $narrative]);
@@ -106,17 +97,31 @@ class ComicController extends Controller
         return view('comics.create');
     }
 
-    public function store(Request $request)
+    public function store(\App\Http\Requests\StoreComicRequest $request)
     {
-        $validated = $request->validate($this->comicValidationRules(isStore: true));
+        $validated = $request->validated();
 
-        $validated['cover_image'] = $this->resolveCoverImage($request, $validated);
+        $dispatchCoverUrl = null;
 
+        if ($request->hasFile('cover_image')) {
+            $validated['cover_image'] = $this->uploadCoverFile($request, 'comic');
+        } elseif (!empty($validated['cover_image_url'])) {
+            $validated['cover_image'] = $validated['cover_image_url'];
+            $dispatchCoverUrl = $validated['cover_image_url'];
+        }
+
+        $tagsInput = $validated['tags_input'] ?? null;
         unset($validated['cover_image_url'], $validated['tags_input']);
 
         $comic = Comic::create($validated);
 
-        $this->tagSync->sync($comic, $request->input('tags_input'));
+        $this->tagSync->sync($comic, $tagsInput);
+
+        if ($dispatchCoverUrl) {
+            \App\Jobs\DownloadCoverImage::dispatch($comic, $dispatchCoverUrl);
+        }
+
+        \App\Jobs\UpdateNarrativeReport::dispatch();
 
         return redirect()->route('comics.index')->with('success', 'Comic added successfully!');
     }
@@ -136,9 +141,9 @@ class ComicController extends Controller
         return view('comics.edit', compact('comic', 'tagsString'));
     }
 
-    public function update(Request $request, Comic $comic)
+    public function update(\App\Http\Requests\UpdateComicRequest $request, Comic $comic)
     {
-        $validated = $request->validate($this->comicValidationRules(isStore: false));
+        $validated = $request->validated();
 
         if ($request->hasFile('cover_image')) {
             $validated['cover_image'] = $this->uploadCoverFile($request, 'comic');
@@ -151,12 +156,16 @@ class ComicController extends Controller
 
         $this->tagSync->sync($comic, $tagsInput);
 
+        \App\Jobs\UpdateNarrativeReport::dispatch();
+
         return redirect()->route('comics.show', $comic)->with('success', 'Comic updated successfully!');
     }
 
     public function destroy(Comic $comic)
     {
         $comic->delete();
+
+        \App\Jobs\UpdateNarrativeReport::dispatch();
 
         return redirect()->route('comics.index');
     }
@@ -165,48 +174,7 @@ class ComicController extends Controller
     // Private Helpers
     // -------------------------------------------------------------------------
 
-    /**
-     * Aturan validasi bersama untuk store dan update.
-     *
-     * @param  bool  $isStore  Jika true, sertakan aturan `cover_image_url` (hanya untuk store).
-     * @return array<string, string>
-     */
-    private function comicValidationRules(bool $isStore): array
-    {
-        $rules = [
-            'title'       => 'required|string|max:255',
-            'author'      => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'cover_image' => 'nullable|image|max:2048',
-            'status'      => 'required|in:reading,completed,wishlist,plan_to_read',
-            'priority'    => 'nullable|in:low,medium,high,extreme',
-            'price'       => 'nullable|numeric',
-            'tags_input'  => 'nullable|string',
-        ];
 
-        if ($isStore) {
-            $rules['cover_image_url'] = 'nullable|url';
-        }
-
-        return $rules;
-    }
-
-    /**
-     * Tentukan nilai `cover_image` akhir untuk comic baru:
-     * upload file lokal diprioritaskan, download URL kedua, null jika tidak ada keduanya.
-     */
-    private function resolveCoverImage(Request $request, array $validated): ?string
-    {
-        if ($request->hasFile('cover_image')) {
-            return $this->uploadCoverFile($request, 'comic');
-        }
-
-        if ($request->filled('cover_image_url')) {
-            return $this->downloadCoverFromUrl($request->input('cover_image_url'));
-        }
-
-        return $validated['cover_image'] ?? null;
-    }
 
     /**
      * Hitung statistik kepemilikan untuk dashboard.
